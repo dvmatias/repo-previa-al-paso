@@ -1,10 +1,7 @@
-package custom;
+package com.dvmatias.previaalpaso.custom;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 
 /**
  * Created by dvmatias on 11/09/17. Designed to keep hold of the instance of the Activity.
@@ -38,5 +35,6 @@ public abstract class BaseDialogFragment<T> extends DialogFragment {
         super.onDetach();
         mActivityInstance = null;
     }
+
 
 }
