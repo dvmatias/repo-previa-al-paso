@@ -7,14 +7,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.custom.SplashDialogFragment;
 
 import java.io.IOException;
 
-import com.dvmatias.previaalpaso.R;
-import com.dvmatias.previaalpaso.custom.GeneralDialogFragment;
-import com.dvmatias.previaalpaso.custom.GeneralDialogFragmentConfiguration;
-
-public class SplashActivity extends AppCompatActivity implements GeneralDialogFragment.OnDialogFragmentClickListener{
+public class SplashActivity extends AppCompatActivity implements SplashDialogFragment.OnDialogFragmentClickListener{
     /**
      * TAG - Tag to use in logs.
      */
@@ -37,7 +37,6 @@ public class SplashActivity extends AppCompatActivity implements GeneralDialogFr
         setContentView(R.layout.activity_splash);
 
         mFragmentManager = getSupportFragmentManager();
-
         mContext = getApplicationContext();
 
         HostAvailabilityTask task =
@@ -50,34 +49,22 @@ public class SplashActivity extends AppCompatActivity implements GeneralDialogFr
      * check (launch HostAvailabilityTask).
      */
     private static void showInternetProblemsDialog() {
-        GeneralDialogFragmentConfiguration dialogFragmentConfiguration =
-                new GeneralDialogFragmentConfiguration.Builder(mContext)
-                .title("Titulo Configurado")
-                .message("Mensaje personalizado.")
-                .width(0.7f)
-                .height(0.3f)
-                .build();
-        GeneralDialogFragment generalDialogFragment =
-                GeneralDialogFragment.newInstance();
-        generalDialogFragment.init(dialogFragmentConfiguration);
-
-        generalDialogFragment.show(mFragmentManager, "dialog");
-        // TODO show()?
+        SplashDialogFragment splashDialogFragment =
+                SplashDialogFragment.newInstance(
+                        mContext.getString(R.string.dialog_title_internet_problem),
+                        mContext.getString(R.string.dialog_msg_internet_problem));
+        splashDialogFragment.show(mFragmentManager,"dialog");
     }
 
     @Override
-    public void onOkClicked(GeneralDialogFragment dialog) {
-        // TODO
-    }
+    public void onNeutralClicked(SplashDialogFragment dialog) {
+        Log.d(TAG, "*** CLICK!");
+        dialog.dismiss();
 
-    @Override
-    public void onCancelClicked(GeneralDialogFragment dialog) {
-        // TODO
-    }
+        HostAvailabilityTask task =
+                new HostAvailabilityTask(this);
+        task.execute(mHostName);
 
-    @Override
-    public void onNeutralClicked(GeneralDialogFragment dialog) {
-        // TODO
     }
 
     /**
@@ -111,6 +98,11 @@ public class SplashActivity extends AppCompatActivity implements GeneralDialogFr
 
         @Override
         protected Boolean doInBackground(String... params) {
+            try{
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             if (isOnline()) {
                 try {
                     Process process = java.lang.Runtime.getRuntime()
@@ -129,9 +121,9 @@ public class SplashActivity extends AppCompatActivity implements GeneralDialogFr
             if (result) {
                 // TODO launch main.
             } else {
-                // TODO Internet problem dialog.
-                this.splashActivity.showInternetProblemsDialog();
+                showInternetProblemsDialog();
             }
+            this.cancel(true);
         }
 
         /**

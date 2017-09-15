@@ -22,8 +22,7 @@
                 android:id="@+id/tv_dialog_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
-                android:layout_gravity="center_horizontal"/>
+                android:text="Title"/>
 
             <TextView
                 android:id="@+id/tv_dialog_msg"
@@ -31,19 +30,12 @@
                 android:layout_height="wrap_content"
                 android:text="Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet." />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:background="@color/cardview_shadow_start_color">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="botonera"
-                    android:textColor="@color/colorPrimaryDark" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_dialog_neutral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reintentar"
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
 

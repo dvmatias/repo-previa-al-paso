@@ -4,5 +4,6 @@
     <!-- Splash Activity -->
     <string name="dialog_title_internet_problem">Ups!</string>
     <string name="dialog_msg_internet_problem">Ha ocurrido un problema con su conexión a Internet. Por favor, verifique que todo esté en orden.</string>
-    <string name="dialog_button_neutral_retry">Reintentar (%s)</string>
+    <string name="dialog_button_ok">Reintentar</string>
+    <string name="dialog_button_cancel">Cancelar</string>
 </resources>
