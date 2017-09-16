@@ -1,5 +1,6 @@
 package com.dvmatias.previaalpaso.activities;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -8,11 +9,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.SplashDialogFragment;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class SplashActivity extends AppCompatActivity implements SplashDialogFragment.OnDialogFragmentClickListener{
     /**
@@ -58,11 +62,8 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
 
     @Override
     public void onNeutralClicked(SplashDialogFragment dialog) {
-        Log.d(TAG, "*** CLICK!");
         dialog.dismiss();
-
-        HostAvailabilityTask task =
-                new HostAvailabilityTask(this);
+        HostAvailabilityTask task = new HostAvailabilityTask(this);
         task.execute(mHostName);
 
     }
@@ -81,6 +82,15 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
          * Boolean - Used to store Internet status. false if not connection available.
          */
         private boolean isInternetAvailable;
+        /**
+         * Task start time in ms.
+         */
+        private long mStartTaskTimeMs;
+        /**
+         * Minimum time task duration in ms.
+         */
+        private final long MIN_TIME_TASK_DURATION_MS = 4000;
+
 
         /**
          * Constructor.
@@ -94,15 +104,12 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
         @Override
         protected void onPreExecute() {
             this.isInternetAvailable = false;
+
+            this.mStartTaskTimeMs = Calendar.getInstance().getTimeInMillis();
         }
 
         @Override
         protected Boolean doInBackground(String... params) {
-            try{
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             if (isOnline()) {
                 try {
                     Process process = java.lang.Runtime.getRuntime()
@@ -113,6 +120,18 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
                     e.printStackTrace();
                 }
             }
+
+            long taskDuration = Calendar.getInstance().getTimeInMillis()
+                    - this.mStartTaskTimeMs;
+            if (taskDuration < MIN_TIME_TASK_DURATION_MS) {
+                long delay = MIN_TIME_TASK_DURATION_MS - taskDuration;
+                try {
+                    Thread.sleep(delay);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             return isInternetAvailable;
         }
 
@@ -127,9 +146,9 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
         }
 
         /**
-         * Check if the device is not in airplane mode.
+         * Check if the device is not in airplane mode. </br>
          *
-         * @return [boolean] - "true" if the device is not in
+         * @return [boolean] "true" if the device is not in
          * airplane mode, "false" otherwise.
          */
         private boolean isOnline() {

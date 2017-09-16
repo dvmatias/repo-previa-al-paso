@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
+    android:layout_gravity="center"
     tools:context="com.dvmatias.previaalpaso.activities.SplashActivity">
 
     <ImageView
         android:id="@+id/iv_logo_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/img_splash"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

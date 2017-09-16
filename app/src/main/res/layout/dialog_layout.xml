@@ -20,22 +20,25 @@
 
             <TextView
                 android:id="@+id/tv_dialog_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/DialogTitle"
                 android:text="Title"/>
 
             <TextView
                 android:id="@+id/tv_dialog_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet." />
+                android:text="Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet."
+                style="@style/DialogMessage"/>
 
             <Button
                 android:id="@+id/btn_dialog_neutral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reintentar"
-                android:layout_gravity="center_horizontal"/>
+                android:text="REINTENTAR"
+                android:layout_gravity="end"
+                style="@style/DialogNeutralButton"/>
 
         </LinearLayout>
 

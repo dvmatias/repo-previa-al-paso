@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DIALOG -->
+    <style name="DialogTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorDialogTitle</item>
+        <item name="android:textSize">@dimen/abc_text_size_title_material</item>
+        <item name="android:textStyle"> bold</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="DialogMessage" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorDialogMessage</item>
+        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+        <item name="android:textStyle"> normal</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <style name="DialogNeutralButton" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/abc_text_size_button_material</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:background">@drawable/dialog_button</item>
+    </style>
+</resources>
