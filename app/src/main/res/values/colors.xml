@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#BE1E2D</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#961824</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorActivityBackground">#FFF0E5</color>
 
     <color name="colorDialogTitle">@color/colorPrimary</color>
     <color name="colorDialogMessage">#484848</color>
@@ -11,4 +13,5 @@
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
 </resources>

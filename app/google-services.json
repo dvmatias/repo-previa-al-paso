@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "588148326116",
+    "firebase_url": "https://previa-al-paso-maipu.firebaseio.com",
+    "project_id": "previa-al-paso-maipu",
+    "storage_bucket": "previa-al-paso-maipu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588148326116:android:137524b7c483a62b",
+        "android_client_info": {
+          "package_name": "com.dvmatias.previaalpaso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588148326116-nkrof5k9e22t3jijbua4nicolfhtbjuo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dvmatias.previaalpaso",
+            "certificate_hash": "173a7f991495abb8c8cddf9230ea481936ff7857"
+          }
+        },
+        {
+          "client_id": "588148326116-5gfpdjld8ruf2nroopsnhplavjamhrar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6knQkb2rgqwu2Oek2w0Wmfbkrd8Kzh28"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588148326116-5gfpdjld8ruf2nroopsnhplavjamhrar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

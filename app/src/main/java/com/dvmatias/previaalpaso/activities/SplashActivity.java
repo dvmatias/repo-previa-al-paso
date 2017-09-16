@@ -2,6 +2,7 @@ package com.dvmatias.previaalpaso.activities;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -33,7 +34,7 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
      */
     private static FragmentManager mFragmentManager;
 
-    private static Context mContext;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +53,12 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
      * Show custom dialog to retry Internet connection
      * check (launch HostAvailabilityTask).
      */
-    private static void showInternetProblemsDialog() {
+    private void showInternetProblemsDialog() {
         SplashDialogFragment splashDialogFragment =
                 SplashDialogFragment.newInstance(
                         mContext.getString(R.string.dialog_title_internet_problem),
                         mContext.getString(R.string.dialog_msg_internet_problem));
+        splashDialogFragment.setCancelable(false);
         splashDialogFragment.show(mFragmentManager,"dialog");
     }
 
@@ -89,7 +91,7 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
         /**
          * Minimum time task duration in ms.
          */
-        private final long MIN_TIME_TASK_DURATION_MS = 4000;
+        private final long MIN_TIME_TASK_DURATION_MS = 2000;
 
 
         /**
@@ -138,7 +140,10 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                // TODO launch main.
+                Intent intentLaunchMainActivity =
+                        new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intentLaunchMainActivity);
+                splashActivity.finish();
             } else {
                 showInternetProblemsDialog();
             }
