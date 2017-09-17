@@ -41,11 +41,15 @@ public class MainActivity extends AppCompatActivity
     /**
      *
      */
-    private DrawerLayout mDrawerLayout;
+    private static DrawerLayout mDrawerLayout;
     /**
      *
      */
-    private NavigationView navigationView;
+    private static NavigationView navigationView;
+    /**
+     *
+     */
+    private static ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +60,10 @@ public class MainActivity extends AppCompatActivity
 
         // Drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
+        mDrawerLayout.setDrawerListener(mToggle);
+        mToggle.syncState();
 
         // Navigation
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -125,42 +129,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Login button on click listener. </br>
-     *
-     * @param v [View] Button view
-     */
-    public void login(View v) {
-        Toast.makeText(getApplicationContext(),
-                v.getTag() + " clicked!", Toast.LENGTH_SHORT).show();
-
-        // TODO: implement action.
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    /**
-     * Set fonts for the navigation items.
-     */
-    private void setNavigationMenuItemsFonts() {
-        Menu m = navigationView.getMenu();
-        for (int i=0;i<m.size();i++) {
-            MenuItem mi = m.getItem(i);
-
-            //for aapplying a font to subMenu ...
-            SubMenu subMenu = mi.getSubMenu();
-            if (subMenu!=null && subMenu.size() >0 ) {
-                for (int j=0; j <subMenu.size();j++) {
-                    MenuItem subMenuItem = subMenu.getItem(j);
-                    applyFontToMenuItem(subMenuItem);
-                }
-            }
-
-            //the method we have create in activity
-            applyFontToMenuItem(mi);
-        }
-    }
-
-    /**
      *
      * @param mi
      */
@@ -205,17 +173,6 @@ public class MainActivity extends AppCompatActivity
             //the method we have create in activity
             applyFontToMenuItem(mi);
         }
-    }
-
-    /**
-     *
-     * @param mi
-     */
-    private void applyFontToMenuItem(MenuItem mi) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "roboto_regular.ttf");
-        SpannableString mNewTitle = new SpannableString(mi.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        mi.setTitle(mNewTitle);
     }
 
     private void addFragment(android.support.v4.app.Fragment fragment) {
