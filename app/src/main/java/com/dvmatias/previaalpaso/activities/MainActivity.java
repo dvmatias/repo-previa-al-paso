@@ -1,5 +1,6 @@
 package com.dvmatias.previaalpaso.activities;
 
+import android.graphics.Typeface;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
@@ -10,6 +11,9 @@ import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.SubMenu;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
 import com.google.firebase.database.FirebaseDatabase;
@@ -105,7 +110,9 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(),
                 item.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
 
-        if (id == R.id.nav_item_online_chat) {
+        if (id == R.id.nav_item_promotions) {
+            // TODO: implement action.
+        } else if (id == R.id.nav_item_online_chat) {
             // TODO: implement action.
         } else if (id == R.id.nav_item_sponsors) {
             // TODO: implement action.
@@ -115,6 +122,53 @@ public class MainActivity extends AppCompatActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Login button on click listener. </br>
+     *
+     * @param v [View] Button view
+     */
+    public void login(View v) {
+        Toast.makeText(getApplicationContext(),
+                v.getTag() + " clicked!", Toast.LENGTH_SHORT).show();
+
+        // TODO: implement action.
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    /**
+     * Set fonts for the navigation items.
+     */
+    private void setNavigationMenuItemsFonts() {
+        Menu m = navigationView.getMenu();
+        for (int i=0;i<m.size();i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu!=null && subMenu.size() >0 ) {
+                for (int j=0; j <subMenu.size();j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+
+            //the method we have create in activity
+            applyFontToMenuItem(mi);
+        }
+    }
+
+    /**
+     *
+     * @param mi
+     */
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "roboto_regular.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 
     /**
