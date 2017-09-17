@@ -6,12 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="#3A00F3">
+    android:background="#E7E7E7">
 
-    <TextView
+    <com.dvmatias.previaalpaso.ui.MainLoadingView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="LOADING FRAGMENT"/>
+        android:layout_gravity="center"/>
 
 </FrameLayout>
