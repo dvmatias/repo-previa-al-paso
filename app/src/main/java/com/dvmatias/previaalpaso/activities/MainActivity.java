@@ -1,36 +1,26 @@
 package com.dvmatias.previaalpaso.activities;
 
 import android.graphics.Typeface;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.util.Log;
-import android.view.SubMenu;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.view.SubMenu;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
-import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
-import com.google.firebase.database.FirebaseDatabase;
+import com.dvmatias.previaalpaso.interfaces.ILoading;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,12 +40,19 @@ public class MainActivity extends AppCompatActivity
      *
      */
     private static ActionBarDrawerToggle mToggle;
+    /**
+     * TODO: (desc)
+     */
+    private static final ILoading loadingListener = LoadingFragment.INSTANCE.getLoadingListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
         // Drawer
@@ -70,7 +67,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         setNavigationMenuItemsFonts();
 
-        addFragment(LoadingFragment.newInstance());
+        addFragment(LoadingFragment.INSTANCE);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "*** CCCCCCCCC");
+        // TODO: move to a proper method.
+        loadingListener.onLoadingStarted();
     }
 
     @Override
