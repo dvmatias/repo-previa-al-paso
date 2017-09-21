@@ -32,17 +32,6 @@ public class LoadingFragment extends Fragment {
         return loadingFragment;
     }
 
-    /**
-     * TODO (desc)
-     * @return
-     */
-    public static LoadingFragment getInstance() {
-        if (LoadingFragment.INSTANCE == null) {
-            return newInstance();
-        }
-        return LoadingFragment.INSTANCE;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

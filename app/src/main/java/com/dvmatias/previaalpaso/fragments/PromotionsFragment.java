@@ -15,19 +15,27 @@ import com.dvmatias.previaalpaso.R;
  * Created by dvmatias on 16/09/17.
  */
 
-public class MainFragment extends Fragment {
+public class PromotionsFragment extends Fragment {
+    private static final String TAG = PromotionsFragment.class.getSimpleName();
+    /**
+     * Loading Fragment Instance.
+     */
+    public static final PromotionsFragment INSTANCE = newInstance();
 
-    public static MainFragment newInstance() {
-        MainFragment mainFragment = new MainFragment();
-
-        return mainFragment;
+    /**
+     * TODO (desc)
+     * @return
+     */
+    private static PromotionsFragment newInstance() {
+        PromotionsFragment promotionsFragment = new PromotionsFragment();
+        return promotionsFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        return inflater.inflate(R.layout.fragment_promotions, container, false);
     }
 
     @Override

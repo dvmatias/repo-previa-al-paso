@@ -1,6 +1,8 @@
 package com.dvmatias.previaalpaso.activities;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,10 +19,22 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.dvmatias.previaalpaso.Products;
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
+import com.dvmatias.previaalpaso.fragments.LocationFragment;
+import com.dvmatias.previaalpaso.fragments.OnlineChatFragment;
+import com.dvmatias.previaalpaso.fragments.PromotionsFragment;
+import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
 import com.dvmatias.previaalpaso.interfaces.ILoading;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +58,14 @@ public class MainActivity extends AppCompatActivity
      * TODO: (desc)
      */
     private static final ILoading loadingListener = LoadingFragment.INSTANCE.getLoadingListener();
+    /**
+     * Database instance.
+     */
+    private static FirebaseDatabase mDatabaseInstance;
+    /**
+     * Database reference.
+     */
+    private static DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +91,50 @@ public class MainActivity extends AppCompatActivity
 
         addFragment(LoadingFragment.INSTANCE);
 
+
+        mDatabaseInstance = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabaseInstance.getReference("product");
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d(TAG, "*** " +
+                        dataSnapshot.getValue(Products.class).toString());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.d(TAG, "*** " +
+                        dataSnapshot.getValue(Products.class).toString());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        MainAsyncTask mainAsyncTask = new MainAsyncTask();
+        mainAsyncTask.execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "*** CCCCCCCCC");
-        // TODO: move to a proper method.
-        loadingListener.onLoadingStarted();
     }
 
     @Override
@@ -104,7 +162,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            // TODO: implement action.
+            Intent i = new Intent(MainActivity.this, RegisterLoginActivity.class);
+            startActivity(i);
             return true;
         }
 
@@ -121,13 +180,13 @@ public class MainActivity extends AppCompatActivity
                 item.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
 
         if (id == R.id.nav_item_promotions) {
-            // TODO: implement action.
+            addFragment(PromotionsFragment.INSTANCE);
         } else if (id == R.id.nav_item_online_chat) {
-            // TODO: implement action.
+            addFragment(OnlineChatFragment.INSTANCE);
         } else if (id == R.id.nav_item_sponsors) {
-            // TODO: implement action.
+            addFragment(SponsorsFragment.INSTANCE);
         } else if (id == R.id.nav_item_location) {
-            // TODO: implement action.
+            addFragment(LocationFragment.INSTANCE);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -135,14 +194,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     *
-     * @param mi
+     * TODO: (desc)
      */
-    private void applyFontToMenuItem(MenuItem mi) {
+    private void applyFontToMenuItem(MenuItem menuItem) {
         Typeface font = Typeface.createFromAsset(getAssets(), "roboto_regular.ttf");
-        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        SpannableString mNewTitle = new SpannableString(menuItem.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        mi.setTitle(mNewTitle);
+        menuItem.setTitle(mNewTitle);
     }
 
     /**
@@ -181,10 +239,58 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * TODO: (desc)
+     * @param fragment
+     */
     private void addFragment(android.support.v4.app.Fragment fragment) {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container_main, fragment); // newInstance() is a static factory method.
         transaction.commit();
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
+
+    private static class MainAsyncTask extends AsyncTask<Void, Void, Void> {
+        /**
+         * TAG.
+         */
+        private final static String TAG = MainAsyncTask.class.getSimpleName();
+        /**
+         * Task start time in ms.
+         */
+        private static long mStartTaskTimeMs;
+        /**
+         * Minimum time task duration in ms.
+         */
+        private final static long MIN_TIME_TASK_DURATION_MS = 5000;
+        /**
+         * Remote database reached and downloaded successfully.
+         */
+        private static boolean mRemoteDatabaseReady;
+        /**
+         * Local database reached and downloaded successfully.
+         */
+        private static boolean mLocalDatabaseReady;
+
+        @Override
+        protected void onPreExecute() {
+            mRemoteDatabaseReady = false;
+            mLocalDatabaseReady = false;
+            mStartTaskTimeMs = Calendar.getInstance().getTimeInMillis();
+            loadingListener.onLoadingStarted();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            // TODO verify db device existance
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+        }
+    }
+
 }

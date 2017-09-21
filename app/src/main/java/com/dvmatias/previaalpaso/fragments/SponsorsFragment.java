@@ -14,6 +14,20 @@ import com.dvmatias.previaalpaso.R;
  */
 
 public class SponsorsFragment extends Fragment {
+    private static final String TAG = SponsorsFragment.class.getSimpleName();
+    /**
+     * Loading Fragment Instance.
+     */
+    public static final SponsorsFragment INSTANCE = newInstance();
+
+    /**
+     * TODO (desc)
+     * @return
+     */
+    private static SponsorsFragment newInstance() {
+        SponsorsFragment sponsorsFragment = new SponsorsFragment();
+        return sponsorsFragment;
+    }
 
     @Nullable
     @Override

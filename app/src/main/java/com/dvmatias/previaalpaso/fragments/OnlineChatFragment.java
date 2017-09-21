@@ -14,6 +14,20 @@ import com.dvmatias.previaalpaso.R;
  */
 
 public class OnlineChatFragment extends Fragment {
+    private static final String TAG = OnlineChatFragment.class.getSimpleName();
+    /**
+     * Loading Fragment Instance.
+     */
+    public static final OnlineChatFragment INSTANCE = newInstance();
+
+    /**
+     * TODO (desc)
+     * @return
+     */
+    private static OnlineChatFragment newInstance() {
+        OnlineChatFragment onlineChatFragment = new OnlineChatFragment();
+        return onlineChatFragment;
+    }
 
     @Nullable
     @Override

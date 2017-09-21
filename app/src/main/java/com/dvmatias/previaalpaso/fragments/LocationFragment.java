@@ -14,6 +14,20 @@ import com.dvmatias.previaalpaso.R;
  */
 
 public class LocationFragment extends Fragment {
+    private static final String TAG = LocationFragment.class.getSimpleName();
+    /**
+     * Loading Fragment Instance.
+     */
+    public static final LocationFragment INSTANCE = newInstance();
+
+    /**
+     * TODO (desc)
+     * @return
+     */
+    private static LocationFragment newInstance() {
+        LocationFragment locationFragment = new LocationFragment();
+        return locationFragment;
+    }
 
     @Nullable
     @Override

@@ -22,9 +22,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/MainTheme">
-
-        </activity>
+            android:theme="@style/MainTheme"></activity>
+        <activity android:name=".activities.RegisterLoginActivity"></activity>
     </application>
 
 </manifest>
