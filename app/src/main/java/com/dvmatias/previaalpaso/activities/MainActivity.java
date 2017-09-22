@@ -18,7 +18,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.dvmatias.previaalpaso.PreviaFragmentManager;
+import com.dvmatias.previaalpaso.custom.PreviaFragmentManager;
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     /**
      *
      */
+    @SuppressWarnings("unused")
     private final String TAG = getClass().getSimpleName();
     /**
      *

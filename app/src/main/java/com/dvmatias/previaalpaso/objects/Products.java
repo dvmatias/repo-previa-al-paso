@@ -1,4 +1,4 @@
-package com.dvmatias.previaalpaso;
+package com.dvmatias.previaalpaso.objects;
 
 import java.util.ArrayList;
 

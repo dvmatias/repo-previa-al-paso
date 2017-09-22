@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import com.dvmatias.previaalpaso.R;
 
 /**
- * Created by dvmatias on 16/09/17.
+ * Created by dvmatias on 16/09/17. Fragment designed to show the full promotions
+ * list.
  */
 
 public class PromotionsFragment extends Fragment {
