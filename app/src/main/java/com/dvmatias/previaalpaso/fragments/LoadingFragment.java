@@ -17,7 +17,10 @@ import com.dvmatias.previaalpaso.ui.MainLoadingView;
  */
 
 public class LoadingFragment extends Fragment {
-    private static final String TAG = LoadingFragment.class.getSimpleName();
+    /**
+     * TAG.
+     */
+    public static final String TAG = LoadingFragment.class.getSimpleName();
     /**
      * Loading Fragment Instance.
      */

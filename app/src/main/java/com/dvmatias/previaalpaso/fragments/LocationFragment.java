@@ -2,7 +2,7 @@ package com.dvmatias.previaalpaso.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,7 @@ import com.dvmatias.previaalpaso.R;
  */
 
 public class LocationFragment extends Fragment {
-    private static final String TAG = LocationFragment.class.getSimpleName();
+    public static final String TAG = LocationFragment.class.getSimpleName();
     /**
      * Loading Fragment Instance.
      */

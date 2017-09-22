@@ -7,13 +7,13 @@ import java.util.ArrayList;
  */
 
 public class Products {
-    public int id;
+    public long id;
     public String brand;
     public String name;
     public String type;
-    public int content_ml;
+    public long content_ml;
     public String flavor;
-    public int stock;
+    public long stock;
     public long price;
 
     /**
@@ -26,16 +26,16 @@ public class Products {
     /**
      * Class constructor. </br>
      *
-     * @param id [int] Product id. Must be an int.
+     * @param id [long] Product id. Must be an long.
      * @param brand [String] Product brand name.
      * @param name [String] Product common name.
      * @param type [String] Product drink type.
-     * @param content_ml [int] Product net content. Must be specified in ml.
+     * @param content_ml [long] Product net content. Must be specified in ml.
      * @param flavor [String] Product flavor if any.
-     * @param stock [int] Product quantity availability in stock.
+     * @param stock [long] Product quantity availability in stock.
      * @param price [long] Product cost and sale prices.
      */
-    public Products(int id, String brand, String name, String type, int content_ml, String flavor, int stock, long price) {
+    public Products(long id, String brand, String name, String type, long content_ml, String flavor, long stock, long price) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -46,11 +46,11 @@ public class Products {
         this.price = price;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -78,11 +78,11 @@ public class Products {
         this.type = type;
     }
 
-    public int getContentMl() {
+    public long getContentMl() {
         return content_ml;
     }
 
-    public void setContentMl(int content_ml) {
+    public void setContentMl(long content_ml) {
         this.content_ml = content_ml;
     }
 
@@ -94,11 +94,11 @@ public class Products {
         this.flavor = flavor;
     }
 
-    public int getStock() {
+    public long getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(long stock) {
         this.stock = stock;
     }
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,10 @@ import com.dvmatias.previaalpaso.R;
  */
 
 public class PromotionsFragment extends Fragment {
-    private static final String TAG = PromotionsFragment.class.getSimpleName();
+    /**
+     * TAG.
+     */
+    public static final String TAG = PromotionsFragment.class.getSimpleName();
     /**
      * Loading Fragment Instance.
      */
@@ -35,15 +38,10 @@ public class PromotionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_promotions, container, false);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_promotions, container, false);
 
         // Floating button
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,5 +49,14 @@ public class PromotionsFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
+        return rootView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
     }
 }

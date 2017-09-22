@@ -2,8 +2,8 @@ package com.dvmatias.previaalpaso.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,14 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.dvmatias.previaalpaso.Products;
+import com.dvmatias.previaalpaso.PreviaFragmentManager;
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
@@ -28,13 +27,6 @@ import com.dvmatias.previaalpaso.fragments.OnlineChatFragment;
 import com.dvmatias.previaalpaso.fragments.PromotionsFragment;
 import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
 import com.dvmatias.previaalpaso.interfaces.ILoading;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,91 +37,58 @@ public class MainActivity extends AppCompatActivity
     /**
      *
      */
-    private static DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
     /**
      *
      */
-    private static NavigationView navigationView;
+    private NavigationView mNavigationView;
     /**
      *
      */
-    private static ActionBarDrawerToggle mToggle;
+    static ActionBarDrawerToggle mToggle;
     /**
-     * TODO: (desc)
+     * Loading FirebaseDatabase info state listener.
      */
     private static final ILoading loadingListener = LoadingFragment.INSTANCE.getLoadingListener();
     /**
-     * Database instance.
+     * Previa custom fragment manager.
      */
-    private static FirebaseDatabase mDatabaseInstance;
-    /**
-     * Database reference.
-     */
-    private static DatabaseReference mDatabaseReference;
+    private PreviaFragmentManager mPreviaFragmentManager;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
         // Drawer
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(mToggle);
         mToggle.syncState();
 
         // Navigation
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.getMenu().getItem(0).setChecked(true);
         setNavigationMenuItemsFonts();
 
-        addFragment(LoadingFragment.INSTANCE);
-
-
-        mDatabaseInstance = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabaseInstance.getReference("product");
-        mDatabaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d(TAG, "*** " +
-                        dataSnapshot.getValue(Products.class).toString());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.d(TAG, "*** " +
-                        dataSnapshot.getValue(Products.class).toString());
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        // Instantiate FragmentManager and add PromotionsFragment.
+        mPreviaFragmentManager = new PreviaFragmentManager(this);
+        mPreviaFragmentManager.replace(R.id.container_main,
+                PromotionsFragment.INSTANCE,
+                PromotionsFragment.TAG);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        MainAsyncTask mainAsyncTask = new MainAsyncTask();
-        mainAsyncTask.execute();
     }
 
     @Override
@@ -172,7 +131,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -180,13 +139,21 @@ public class MainActivity extends AppCompatActivity
                 item.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
 
         if (id == R.id.nav_item_promotions) {
-            addFragment(PromotionsFragment.INSTANCE);
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    PromotionsFragment.INSTANCE,
+                    PromotionsFragment.TAG);
         } else if (id == R.id.nav_item_online_chat) {
-            addFragment(OnlineChatFragment.INSTANCE);
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    OnlineChatFragment.INSTANCE,
+                    OnlineChatFragment.TAG);
         } else if (id == R.id.nav_item_sponsors) {
-            addFragment(SponsorsFragment.INSTANCE);
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    SponsorsFragment.INSTANCE,
+                    SponsorsFragment.TAG);
         } else if (id == R.id.nav_item_location) {
-            addFragment(LocationFragment.INSTANCE);
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    LocationFragment.INSTANCE,
+                    LocationFragment.TAG);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -194,7 +161,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * TODO: (desc)
+     * Apply custom font to navigation drawer menu items.
      */
     private void applyFontToMenuItem(MenuItem menuItem) {
         Typeface font = Typeface.createFromAsset(getAssets(), "roboto_regular.ttf");
@@ -221,7 +188,7 @@ public class MainActivity extends AppCompatActivity
      * Set fonts for the navigation items.
      */
     private void setNavigationMenuItemsFonts() {
-        Menu m = navigationView.getMenu();
+        Menu m = mNavigationView.getMenu();
         for (int i=0;i<m.size();i++) {
             MenuItem mi = m.getItem(i);
 
@@ -238,59 +205,4 @@ public class MainActivity extends AppCompatActivity
             applyFontToMenuItem(mi);
         }
     }
-
-    /**
-     * TODO: (desc)
-     * @param fragment
-     */
-    private void addFragment(android.support.v4.app.Fragment fragment) {
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container_main, fragment); // newInstance() is a static factory method.
-        transaction.commit();
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private static class MainAsyncTask extends AsyncTask<Void, Void, Void> {
-        /**
-         * TAG.
-         */
-        private final static String TAG = MainAsyncTask.class.getSimpleName();
-        /**
-         * Task start time in ms.
-         */
-        private static long mStartTaskTimeMs;
-        /**
-         * Minimum time task duration in ms.
-         */
-        private final static long MIN_TIME_TASK_DURATION_MS = 5000;
-        /**
-         * Remote database reached and downloaded successfully.
-         */
-        private static boolean mRemoteDatabaseReady;
-        /**
-         * Local database reached and downloaded successfully.
-         */
-        private static boolean mLocalDatabaseReady;
-
-        @Override
-        protected void onPreExecute() {
-            mRemoteDatabaseReady = false;
-            mLocalDatabaseReady = false;
-            mStartTaskTimeMs = Calendar.getInstance().getTimeInMillis();
-            loadingListener.onLoadingStarted();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            // TODO verify db device existance
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-        }
-    }
-
 }
