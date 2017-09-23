@@ -22,7 +22,7 @@ public class PreviaFragmentManager {
     /**
      * Fragment tag.
      */
-    private String fragmentTag;
+    private String currentFragmentTag;
 
     /**
      * Constructor. </br>
@@ -36,21 +36,47 @@ public class PreviaFragmentManager {
     /**
      * Replace fragment. </br>
      *
-     * @param containerViewId the view id
-     * @param fragment        the fragment
-     * @param tag             the tag
+     * @param containerViewId [int] The container view id.
+     * @param fragment        [Fragment] The fragment to add and replace in container.
+     * @param tag             [String] The tag of the fragment replaced.
      */
-    public synchronized void replace(final int containerViewId,
-                                     final Fragment fragment,
-                                     final String tag) {
+    public void replace(final int containerViewId,
+                        final Fragment fragment,
+                        final String tag) {
         FragmentTransaction transaction = mPreviaFragmentManager.beginTransaction();
         transaction.replace(containerViewId, fragment, tag);
         transaction.addToBackStack(tag);
         transaction.commit();
 
-        this.fragmentTag = tag;
+        this.currentFragmentTag = tag;
 
         Log.d(TAG, "replace(): " + toString());
+    }
+
+    /**
+     * Add fragment. </br>
+     *
+     * @param containerViewId [int] The container view id.
+     * @param fragment        [Fragment] The fragment to add in container.
+     * @param tag             [String] The tag of the fragment added.
+     */
+    public void add(final int containerViewId,
+                    final Fragment fragment,
+                    final String tag) {
+        FragmentTransaction transaction = mPreviaFragmentManager.beginTransaction();
+        transaction.add(containerViewId, fragment, tag);
+        transaction.addToBackStack(tag);
+        transaction.commit();
+
+        this.currentFragmentTag = tag;
+    }
+
+    /**
+     * TODO (desc)
+     * @return
+     */
+    public String getCurrentFragmentTag () {
+        return this.currentFragmentTag;
     }
 
     /**
@@ -61,7 +87,7 @@ public class PreviaFragmentManager {
     public String toString() {
         return "PreviaFragmentManager{" +
                 "mPreviaFragmentManager = " + this.mPreviaFragmentManager +
-                ", tag = " + this.fragmentTag +
+                ", tag = " + this.currentFragmentTag +
                 '}';
     }
 }

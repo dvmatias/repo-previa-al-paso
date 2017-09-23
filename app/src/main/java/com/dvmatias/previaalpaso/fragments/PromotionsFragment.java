@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.custom.PreviaFragmentManager;
+import com.dvmatias.previaalpaso.helpers.PromotionsHelper;
 
 /**
  * Created by dvmatias on 16/09/17. Fragment designed to show the full promotions
@@ -25,6 +27,11 @@ public class PromotionsFragment extends Fragment {
      * Loading Fragment Instance.
      */
     public static final PromotionsFragment INSTANCE = newInstance();
+    /**
+     * Previa custom fragment manager.
+     */
+    private static PreviaFragmentManager mPreviaFragmentManager;
+
 
     /**
      * TODO (desc)

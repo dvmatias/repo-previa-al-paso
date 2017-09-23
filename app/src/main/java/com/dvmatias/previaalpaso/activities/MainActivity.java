@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -26,35 +27,32 @@ import com.dvmatias.previaalpaso.fragments.LocationFragment;
 import com.dvmatias.previaalpaso.fragments.OnlineChatFragment;
 import com.dvmatias.previaalpaso.fragments.PromotionsFragment;
 import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
+import com.dvmatias.previaalpaso.helpers.PromotionsHelper;
 import com.dvmatias.previaalpaso.interfaces.ILoading;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     /**
-     *
+     * TAG.
      */
     @SuppressWarnings("unused")
     private final String TAG = getClass().getSimpleName();
     /**
-     *
+     * Drawer layout.
      */
     private DrawerLayout mDrawerLayout;
     /**
-     *
+     * Navigation view.
      */
     private NavigationView mNavigationView;
     /**
-     *
+     * Toggle button.
      */
     static ActionBarDrawerToggle mToggle;
     /**
-     * Loading FirebaseDatabase info state listener.
-     */
-    private static final ILoading loadingListener = LoadingFragment.INSTANCE.getLoadingListener();
-    /**
      * Previa custom fragment manager.
      */
-    private PreviaFragmentManager mPreviaFragmentManager;
+    private static PreviaFragmentManager mPreviaFragmentManager;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -80,16 +78,26 @@ public class MainActivity extends AppCompatActivity
         mNavigationView.getMenu().getItem(0).setChecked(true);
         setNavigationMenuItemsFonts();
 
-        // Instantiate FragmentManager and add PromotionsFragment.
         mPreviaFragmentManager = new PreviaFragmentManager(this);
-        mPreviaFragmentManager.replace(R.id.container_main,
-                PromotionsFragment.INSTANCE,
-                PromotionsFragment.TAG);
+        if (!PromotionsHelper.isPromotionsReady()) {
+            // Replace LoadingFragment.
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    LoadingFragment.INSTANCE,
+                    LoadingFragment.TAG);
+        } else {
+            // Replace PromotionsFragment.
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    PromotionsFragment.INSTANCE,
+                    PromotionsFragment.TAG);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (!PromotionsHelper.isPromotionsReady()) {
+            PromotionsHelper.downloadPromotions();
+        }
     }
 
     @Override

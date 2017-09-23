@@ -2,7 +2,7 @@ package com.dvmatias.previaalpaso.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +31,7 @@ public class LoadingFragment extends Fragment {
      * @return
      */
     private static LoadingFragment newInstance() {
-        LoadingFragment loadingFragment = new LoadingFragment();
-        return loadingFragment;
+        return new LoadingFragment();
     }
 
     @Nullable

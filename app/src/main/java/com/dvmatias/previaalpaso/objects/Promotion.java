@@ -1,16 +1,17 @@
 package com.dvmatias.previaalpaso.objects;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by dvmatias on 22/09/17. Promotions class designed to create Promotion
+ * Created by dvmatias on 22/09/17. Promotion class designed to create Promotion
  * objects.
  */
 
-public class Promotions {
+public class Promotion {
     private String url_img;
     private String name;
-    private String[] products_id;
+    private ArrayList<Long> products_id;
     private long price;
     private String description;
     private String type;
@@ -19,7 +20,7 @@ public class Promotions {
     /**
      * Empty constructor.
      */
-    public Promotions() { }
+    public Promotion() { }
 
     /**
      * Constructor. </br>
@@ -32,7 +33,7 @@ public class Promotions {
      * @param type []
      * @param sponsor []
      */
-    public Promotions(String url_img, String name, String[] products_id, long price, String description, String type, Sponsor sponsor) {
+    public Promotion(String url_img, String name, ArrayList<Long> products_id, long price, String description, String type, Sponsor sponsor) {
         this.url_img = url_img;
         this.name = name;
         this.products_id = products_id;
@@ -58,11 +59,11 @@ public class Promotions {
         this.name = name;
     }
 
-    public String[] getProducts_id() {
+    public ArrayList<Long> getProducts_id() {
         return products_id;
     }
 
-    public void setProducts_id(String[] products_id) {
+    public void setProducts_id(ArrayList<Long> products_id) {
         this.products_id = products_id;
     }
 
@@ -100,10 +101,10 @@ public class Promotions {
 
     @Override
     public String toString() {
-        return "Promotions{" +
+        return "Promotion{" +
                 "url_img='" + url_img + '\'' +
                 ", name='" + name + '\'' +
-                ", products_id=" + Arrays.toString(products_id) +
+                ", products_id=" + products_id +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", type='" + type + '\'' +

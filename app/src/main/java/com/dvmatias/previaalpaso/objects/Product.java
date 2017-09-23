@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by dvmatias on 21/09/17.
  */
 
-public class Products {
+public class Product {
     public long id;
     public String brand;
     public String name;
@@ -19,7 +19,7 @@ public class Products {
     /**
      * Empty constructor. Required!
      */
-    public Products() {
+    public Product() {
 
     }
 
@@ -35,7 +35,7 @@ public class Products {
      * @param stock [long] Product quantity availability in stock.
      * @param price [long] Product cost and sale prices.
      */
-    public Products(long id, String brand, String name, String type, long content_ml, String flavor, long stock, long price) {
+    public Product(long id, String brand, String name, String type, long content_ml, String flavor, long stock, long price) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -112,7 +112,7 @@ public class Products {
 
     @Override
     public String toString() {
-        return "Products{" +
+        return "Product{" +
                 "id=" + id +
                 ", brand='" + brand + '\'' +
                 ", name='" + name + '\'' +
