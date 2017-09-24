@@ -215,6 +215,9 @@ public class FirebaseDatabaseHelper {
         return (mIsProductsReady && mIsPromotionsReady);
     }
 
+    /**
+     * TODO desc
+     */
     private static Handler DownloadHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

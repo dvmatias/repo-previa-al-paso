@@ -9,4 +9,5 @@ public interface IDatabaseDownloadState {
     public void onLoadingStarted();
     public void onLoadingCompleted();
     public void onLoadingFailed();
+    public void retryLoading();
 }

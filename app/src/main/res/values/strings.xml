@@ -19,4 +19,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_search">Buscar</string>
+
+    <!-- Fragment Loading -->
+    <string name="loading_failed">:( "\n\n"Toca la pantalla"\n"para intentarlo nuevamente.</string>
 </resources>

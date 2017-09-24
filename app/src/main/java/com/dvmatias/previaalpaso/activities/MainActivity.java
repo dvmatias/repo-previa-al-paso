@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         if (!FirebaseDatabaseHelper.isPromotionsAndProductsReady()) {
             // Replace LoadingFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
-                    LoadingFragment.INSTANCE,
+                    LoadingFragment.getInstance(),
                     LoadingFragment.TAG);
         } else {
             // Replace PromotionsFragment.
@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity
             mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             mDrawerToggle.setDrawerIndicatorEnabled(false);
             mDrawerToggle.syncState();
-            LoadingView.startLoadingAnimation();
+
+            LoadingFragment.getInstance().startLoadingAnimation();
         }
 
         @Override
@@ -137,6 +138,14 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onLoadingFailed() {
             Log.d(TAG, "*** onLoadingFailed()");
+            // TODO implement LoadingView behaviour on loading failed.
+            LoadingFragment.getInstance().showRetry();
+        }
+
+        @Override
+        public void retryLoading() {
+            Log.d(TAG, "*** retryLoading()");
+            FirebaseDatabaseHelper.downloadDatabase();
         }
     };
 

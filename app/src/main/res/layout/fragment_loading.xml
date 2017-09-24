@@ -10,8 +10,23 @@
     android:paddingBottom="@dimen/action_bar_default_height_material">
 
     <com.dvmatias.previaalpaso.ui.LoadingView
+        android:id="@+id/loading_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:textStyle="italic"
+        android:textColor="#33000000"
+        android:text="@string/loading_failed"
+        android:drawableBottom="@android:drawable/ic_dialog_email"
+        android:drawablePadding="12dp"
+        android:clickable="true"
+        android:visibility="invisible"/>
 
 </FrameLayout>
