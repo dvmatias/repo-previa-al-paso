@@ -1,5 +1,6 @@
 package com.dvmatias.previaalpaso.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,8 +28,9 @@ import com.dvmatias.previaalpaso.fragments.LocationFragment;
 import com.dvmatias.previaalpaso.fragments.OnlineChatFragment;
 import com.dvmatias.previaalpaso.fragments.PromotionsFragment;
 import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
-import com.dvmatias.previaalpaso.helpers.PromotionsHelper;
-import com.dvmatias.previaalpaso.interfaces.ILoading;
+import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
+import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
+import com.dvmatias.previaalpaso.ui.LoadingView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,11 +38,15 @@ public class MainActivity extends AppCompatActivity
      * TAG.
      */
     @SuppressWarnings("unused")
-    private final String TAG = getClass().getSimpleName();
+    private final static String TAG = MainActivity.class.getSimpleName();
+    /**
+     *
+     */
+    public final Activity activitty = MainActivity.this;
     /**
      * Drawer layout.
      */
-    private DrawerLayout mDrawerLayout;
+    private static DrawerLayout mDrawerLayout;
     /**
      * Navigation view.
      */
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * Toggle button.
      */
-    static ActionBarDrawerToggle mToggle;
+    private static ActionBarDrawerToggle mDrawerToggle;
     /**
      * Previa custom fragment manager.
      */
@@ -67,10 +73,10 @@ public class MainActivity extends AppCompatActivity
 
         // Drawer
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        mToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(mToggle);
-        mToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         // Navigation
         mNavigationView = findViewById(R.id.nav_view);
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         setNavigationMenuItemsFonts();
 
         mPreviaFragmentManager = new PreviaFragmentManager(this);
-        if (!PromotionsHelper.isPromotionsReady()) {
+        if (!FirebaseDatabaseHelper.isPromotionsAndProductsReady()) {
             // Replace LoadingFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
                     LoadingFragment.INSTANCE,
@@ -95,9 +101,52 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if (!PromotionsHelper.isPromotionsReady()) {
-            PromotionsHelper.downloadPromotions();
+        if (!FirebaseDatabaseHelper.isPromotionsAndProductsReady()) {
+            FirebaseDatabaseHelper.downloadDatabase();
         }
+    }
+
+    /**
+     * Loading state listener.
+     */
+    static IDatabaseDownloadState iDatabaseDownloadStateListener = new IDatabaseDownloadState() {
+        @Override
+        public void onLoadingStarted() {
+            Log.d(TAG, "*** onLoadingStarted()");
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            mDrawerToggle.syncState();
+            LoadingView.startLoadingAnimation();
+        }
+
+        @Override
+        public void onLoadingCompleted() {
+            Log.d(TAG, "*** onLoadingCompleted()");
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mDrawerToggle.syncState();
+
+            // Replace PromotionsFragment.
+            mPreviaFragmentManager.replace(R.id.container_main,
+                    PromotionsFragment.INSTANCE,
+                    PromotionsFragment.TAG);
+        }
+
+        @Override
+        public void onLoadingFailed() {
+            Log.d(TAG, "*** onLoadingFailed()");
+        }
+    };
+
+    /**
+     * TODO: (desc)
+     * @return
+     */
+    public static IDatabaseDownloadState getLoadingListener() {
+        Log.d(TAG, "*** BBBBBBB");
+        return iDatabaseDownloadStateListener;
     }
 
     @Override

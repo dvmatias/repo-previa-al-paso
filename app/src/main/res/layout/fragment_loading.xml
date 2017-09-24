@@ -9,7 +9,7 @@
     android:background="#E7E7E7"
     android:paddingBottom="@dimen/action_bar_default_height_material">
 
-    <com.dvmatias.previaalpaso.ui.MainLoadingView
+    <com.dvmatias.previaalpaso.ui.LoadingView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>

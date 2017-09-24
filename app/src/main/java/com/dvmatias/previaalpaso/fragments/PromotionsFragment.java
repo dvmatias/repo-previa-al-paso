@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.PreviaFragmentManager;
-import com.dvmatias.previaalpaso.helpers.PromotionsHelper;
 
 /**
  * Created by dvmatias on 16/09/17. Fragment designed to show the full promotions

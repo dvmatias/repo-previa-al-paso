@@ -19,11 +19,11 @@ import java.util.Collections;
  * Created by dvmatias on 17/09/17
  */
 
-public class MainLoadingView extends FrameLayout {
+public class LoadingView extends FrameLayout {
     /**
      * TAG.
      */
-    private final static String TAG = MainLoadingView.class.getSimpleName();
+    private final static String TAG = LoadingView.class.getSimpleName();
     /**
      * Minimum index icon number inside mArrayIcon (fab icons array).
      */
@@ -35,7 +35,7 @@ public class MainLoadingView extends FrameLayout {
     /**
      * Offset time to show loading icon before hide-change.
      */
-    private static final long OFFSET_TIME_ANIMATION = 1200;
+    private static final long OFFSET_TIME_ANIMATION = 1000;
     /**
      * Context.
      */
@@ -53,15 +53,15 @@ public class MainLoadingView extends FrameLayout {
      */
     private static int mIconIndex = MIN_ICON_INDEX;
 
-    public MainLoadingView(@NonNull Context context) {
+    public LoadingView(@NonNull Context context) {
         this(context, null);
     }
 
-    public MainLoadingView(@NonNull Context context, AttributeSet attrs) {
+    public LoadingView(@NonNull Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MainLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         View rootView = inflate(context, R.layout.view_loading_main, this);
@@ -148,25 +148,4 @@ public class MainLoadingView extends FrameLayout {
         });
         loadingIndicator.startAnimation(showFab);
     }
-
-//    private void init(Context context) {
-//        rootView = inflate(context, R.layout.value_selector, this);
-//        valueTextView = (TextView) rootView.findViewById(R.id.valueTextView);
-//
-//        minusButton = rootView.findViewById(R.id.minusButton);
-//        plusButton = rootView.findViewById(R.id.plusButton);
-//
-//        minusButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                decrementValue(); //we'll define this method later
-//            }
-//        });
-//
-//        plusButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                incrementValue(); //we'll define this method later        }
-//            });
-//        }
 }
