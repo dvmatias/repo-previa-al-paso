@@ -20,7 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by dvmatias on 22/09/17.
+ * Created by dvmatias on 22/09/17. Firebase Database Helper provides tools to download
+ * products and promotions and set the Arrays of those objects to use in the entire app.
  */
 
 public class FirebaseDatabaseHelper {
@@ -106,13 +107,13 @@ public class FirebaseDatabaseHelper {
      */
     private static final String KEY_STOCK = "stock";
     /**
-     *
+     * Min time of download task duration for booth, products and promotions.
      */
     private final static long MIN_DOWNLOAD_TASK_DURATION = 3000;
     /**
-     *
+     * Max time of download task duration for booth, products and promotions.
      */
-    private final static long MAX_DOWNLOAD_TASK_DURATION = 5;
+    private final static long MAX_DOWNLOAD_TASK_DURATION = 10000;
     /**
      * Message what value to indicate the handler that the download has been started.
      */
@@ -144,11 +145,19 @@ public class FirebaseDatabaseHelper {
     /**
      *
      */
-    public static boolean mIsPromotionsReady;
+    private static boolean mIsPromotionsReady;
     /**
      *
      */
-    public static boolean mIsProductsReady;
+    private static boolean mIsProductsReady;
+    /**
+     *
+     */
+    private static ChildEventListener mChildEventListener;
+    /**
+     *
+     */
+    private static ValueEventListener mValueEventListener;
 
     /**
      * Constructor.
@@ -208,20 +217,21 @@ public class FirebaseDatabaseHelper {
     }
 
     /**
-     * TODO (desc)
-     * @return
+     * Tells if promotions and products where downloaded successfully. </br>
+     *
+     * @return [boolean] <b>true</b> if both, products and promotions, where downloaded
+     *          successfully, <b>false</b> if not.
      */
     public static boolean isPromotionsAndProductsReady () {
         return (mIsProductsReady && mIsPromotionsReady);
     }
 
     /**
-     * TODO desc
+     * Handler.
      */
     private static Handler DownloadHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            // TODO
             switch (msg.what) {
                 case MSG_WHAT_START_DOWNLOAD:
                     loadingListener.onLoadingStarted();
@@ -233,7 +243,8 @@ public class FirebaseDatabaseHelper {
                     downloadProducts();
                     break;
                 case MGS_WHAT_DOWNLOAD_COMPLETED:
-                    // TODO remove all database listeners.
+                    mDatabaseReference.removeEventListener(mChildEventListener);
+                    mDatabaseReference.removeEventListener(mValueEventListener);
                     DownloadHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -242,6 +253,8 @@ public class FirebaseDatabaseHelper {
                     });
                     break;
                 case MSG_WHAT_DOWNLOAD_FAILED:
+                    mDatabaseReference.removeEventListener(mChildEventListener);
+                    mDatabaseReference.removeEventListener(mValueEventListener);
                     DownloadHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -254,14 +267,15 @@ public class FirebaseDatabaseHelper {
     };
 
     /**
-     * TODO
+     * Start the Promotions download. Also set the counters for item count of products and
+     * promotions that exist in database.
      */
     public static void downloadDatabase() {
         Message msgStartDownload = new Message();
         msgStartDownload.what = MSG_WHAT_START_DOWNLOAD;
         DownloadHandler.dispatchMessage(msgStartDownload);
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mValueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snap: dataSnapshot.getChildren()) {
@@ -278,7 +292,6 @@ public class FirebaseDatabaseHelper {
                     DownloadHandler.sendMessage(messageDownloadPromotions);
 
                 } else {
-                    Log.d(TAG, "*** A");
                     Message messageDownloadFailed = new Message();
                     messageDownloadFailed.what = MSG_WHAT_DOWNLOAD_FAILED;
                     DownloadHandler.sendMessage(messageDownloadFailed);
@@ -289,18 +302,19 @@ public class FirebaseDatabaseHelper {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+
+        mDatabaseReference.addListenerForSingleValueEvent(mValueEventListener);
     }
 
     /**
-     * TODO
+     * Download promotions.
      */
     private static void downloadPromotions() {
-        Log.d(TAG, "*** downloadPromotions()");
         final long mTaskStartTime = Calendar.getInstance().getTimeInMillis();
         final ArrayList<Promotion> promotionsArray = new ArrayList<>();
 
-        final ChildEventListener childEventListener = mDatabaseReference
+        mChildEventListener = mDatabaseReference
                 .child(KEY_PROMOTION)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
@@ -367,79 +381,80 @@ public class FirebaseDatabaseHelper {
     }
 
     /**
-     * TODO
+     * Download products.
      */
     private static void downloadProducts() {
-        Log.d(TAG, "*** downloadProducts()");
         final long mTaskStartTime = Calendar.getInstance().getTimeInMillis();
         final ArrayList<Product> productsArray = new ArrayList<>();
 
-        mDatabaseReference.child(KEY_PRODUCT).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Product product = new Product();
+        mChildEventListener = mDatabaseReference
+                .child(KEY_PRODUCT)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Product product = new Product();
 
-                product.setBrand((String) dataSnapshot.child(KEY_BRAND).getValue());
-                product.setContentMl((long) dataSnapshot.child(KEY_CONTENT_ML).getValue());
-                product.setFlavor((String) dataSnapshot.child(KEY_FLAVOR).getValue());
-                product.setId((long) dataSnapshot.child(KEY_ID).getValue());
-                product.setPrice((long) dataSnapshot.child(KEY_PRICE).getValue());
-                product.setName((String) dataSnapshot.child(KEY_NAME).getValue());
-                product.setStock((long) dataSnapshot.child(KEY_STOCK).getValue());
-                product.setType((String) dataSnapshot.child(KEY_TYPE).getValue());
+                        product.setBrand((String) dataSnapshot.child(KEY_BRAND).getValue());
+                        product.setContentMl((long) dataSnapshot.child(KEY_CONTENT_ML).getValue());
+                        product.setFlavor((String) dataSnapshot.child(KEY_FLAVOR).getValue());
+                        product.setId((long) dataSnapshot.child(KEY_ID).getValue());
+                        product.setPrice((long) dataSnapshot.child(KEY_PRICE).getValue());
+                        product.setName((String) dataSnapshot.child(KEY_NAME).getValue());
+                        product.setStock((long) dataSnapshot.child(KEY_STOCK).getValue());
+                        product.setType((String) dataSnapshot.child(KEY_TYPE).getValue());
 
-                productsArray.add(product);
+                        productsArray.add(product);
 
-                if (productsArray.size() == mProductsCount) {
-                    setProducts(productsArray);
+                        if (productsArray.size() == mProductsCount) {
+                            setProducts(productsArray);
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            long timeOffset =
-                                    Calendar.getInstance().getTimeInMillis() - mTaskStartTime;
-                            if (timeOffset < MIN_DOWNLOAD_TASK_DURATION) {
-                                try {
-                                    Thread.sleep(MIN_DOWNLOAD_TASK_DURATION - timeOffset);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    long timeOffset =
+                                            Calendar.getInstance().getTimeInMillis() - mTaskStartTime;
+                                    if (timeOffset < MIN_DOWNLOAD_TASK_DURATION) {
+                                        try {
+                                            Thread.sleep(MIN_DOWNLOAD_TASK_DURATION - timeOffset);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    if (isPromotionsAndProductsReady()) {
+                                        Message messageDownloadCompleted = new Message();
+                                        messageDownloadCompleted.what = MGS_WHAT_DOWNLOAD_COMPLETED;
+                                        DownloadHandler.sendMessage(messageDownloadCompleted);
+                                    } else {
+                                        Log.d(TAG, "*** C");
+                                        Message msgDownloadFailed = new Message();
+                                        msgDownloadFailed.what = MSG_WHAT_DOWNLOAD_FAILED;
+                                        DownloadHandler.dispatchMessage(msgDownloadFailed);
+                                    }
                                 }
-                            }
-
-                            if (isPromotionsAndProductsReady()) {
-                                Message messageDownloadCompleted = new Message();
-                                messageDownloadCompleted.what = MGS_WHAT_DOWNLOAD_COMPLETED;
-                                DownloadHandler.sendMessage(messageDownloadCompleted);
-                            } else {
-                                Log.d(TAG, "*** C");
-                                Message msgDownloadFailed = new Message();
-                                msgDownloadFailed.what = MSG_WHAT_DOWNLOAD_FAILED;
-                                DownloadHandler.dispatchMessage(msgDownloadFailed);
-                            }
+                            }).start();
                         }
-                    }).start();
-                }
-            }
+                    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            }
+                    }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+                    }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+                    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                    }
+                });
     }
 }

@@ -112,23 +112,13 @@ public class MainActivity extends AppCompatActivity
     static IDatabaseDownloadState iDatabaseDownloadStateListener = new IDatabaseDownloadState() {
         @Override
         public void onLoadingStarted() {
-            Log.d(TAG, "*** onLoadingStarted()");
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            mDrawerToggle.syncState();
-
+            setDrawerState(false);
             LoadingFragment.getInstance().startLoadingAnimation();
         }
 
         @Override
         public void onLoadingCompleted() {
-            Log.d(TAG, "*** onLoadingCompleted()");
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            mDrawerToggle.syncState();
-
+            setDrawerState(true);
             // Replace PromotionsFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
                     PromotionsFragment.INSTANCE,
@@ -137,24 +127,40 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onLoadingFailed() {
-            Log.d(TAG, "*** onLoadingFailed()");
-            // TODO implement LoadingView behaviour on loading failed.
-            LoadingFragment.getInstance().showRetry();
+            setDrawerState(false);
+            LoadingFragment.showRetry();
         }
 
         @Override
         public void retryLoading() {
-            Log.d(TAG, "*** retryLoading()");
             FirebaseDatabaseHelper.downloadDatabase();
         }
     };
 
     /**
-     * TODO: (desc)
-     * @return
+     * Set navigation drawer and toggle button state. </br>
+     *
+     * @param enable [boolean] If <b>true</b> toggle is visible and drawer unlocked. If
+     *               <b>false</b> taggle is gone and drawer is locked and closed.
+     */
+    private static void setDrawerState(boolean enable) {
+        if (enable) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+            mDrawerToggle.setDrawerIndicatorEnabled(enable);
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            mDrawerToggle.setDrawerIndicatorEnabled(enable);
+        }
+        mDrawerLayout.setActivated(enable);
+        mDrawerToggle.syncState();
+    }
+
+    /**
+     * Return listener.
      */
     public static IDatabaseDownloadState getLoadingListener() {
-        Log.d(TAG, "*** BBBBBBB");
         return iDatabaseDownloadStateListener;
     }
 
@@ -168,7 +174,9 @@ public class MainActivity extends AppCompatActivity
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(mDrawerLayout.isActivated()) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
         }
     }
 

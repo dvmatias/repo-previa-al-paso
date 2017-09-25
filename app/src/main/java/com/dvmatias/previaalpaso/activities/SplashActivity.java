@@ -1,6 +1,5 @@
 package com.dvmatias.previaalpaso.activities;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -9,9 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.custom.SplashDialogFragment;
@@ -67,6 +63,11 @@ public class SplashActivity extends AppCompatActivity implements SplashDialogFra
         dialog.dismiss();
         HostAvailabilityTask task = new HostAvailabilityTask(this);
         task.execute(mHostName);
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 

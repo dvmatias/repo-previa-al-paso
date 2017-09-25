@@ -1,8 +1,8 @@
 package com.dvmatias.previaalpaso.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.ui.LoadingView;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +33,7 @@ public class LoadingFragment extends Fragment {
      */
     public static final LoadingFragment INSTANCE = newInstance();
     /**
-     * TODO desc.
+     * Retry textview that allows download database if an error has been occurred.
      */
     private static TextView tvRetry;
     /**
@@ -93,8 +92,6 @@ public class LoadingFragment extends Fragment {
         tvRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "*** retrtyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-                // TODO download database.
                 FirebaseDatabaseHelper.downloadDatabase();
             }
         });
@@ -131,7 +128,7 @@ public class LoadingFragment extends Fragment {
     }
 
     /**
-     * TODO desc
+     * Start loading animation, set visible loading view and hide retry text.
      */
     public void startLoadingAnimation() {
         tvRetry.setVisibility(View.GONE);
@@ -183,10 +180,9 @@ public class LoadingFragment extends Fragment {
     }
 
     /**
-     * TODO desc
+     * Show retry text.
      */
-    public void showRetry() {
-        Log.d(TAG, "*** showRetry()");
+    public static void showRetry() {
         mLoadingView.setVisibility(View.GONE);
         stopLoadingAnimation();
         tvRetry.setVisibility(View.VISIBLE);
@@ -194,14 +190,14 @@ public class LoadingFragment extends Fragment {
 
 
     /**
-     * TODO desc
+     * Stop loading animation and hide liading view.
      */
-    public static void stopLoadingAnimation() {
-        Log.d(TAG, "*** stopLoadingAnimation()");
-
+    private static void stopLoadingAnimation() {
         mLoadingIndicator.clearAnimation();
         mLoadingView.setVisibility(View.GONE);
     }
+
+
 
 }
 
