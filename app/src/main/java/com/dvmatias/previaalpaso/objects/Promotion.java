@@ -2,6 +2,7 @@ package com.dvmatias.previaalpaso.objects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by dvmatias on 22/09/17. Promotion class designed to create Promotion

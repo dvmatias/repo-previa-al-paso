@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#BE1E2D</color>
     <color name="colorPrimaryDark">#961824</color>
+    <color name="colorPrimaryLight">#D26772</color>
     <color name="colorAccent">#FFFF00</color>
 
-    <color name="colorActivityBackground">#FFF0E5</color>
+    <color name="colorActivityBackground">#FAFAFA</color>
     <color name="colorNavigationMenuBackground">#232323</color>
 
     <color name="colorDialogTitle">@color/colorPrimary</color>

@@ -109,7 +109,7 @@ public class FirebaseDatabaseHelper {
     /**
      * Min time of download task duration for booth, products and promotions.
      */
-    private final static long MIN_DOWNLOAD_TASK_DURATION = 3000;
+    private final static long MIN_DOWNLOAD_TASK_DURATION = 2500;
     /**
      * Max time of download task duration for booth, products and promotions.
      */
