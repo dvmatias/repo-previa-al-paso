@@ -51,7 +51,7 @@ public class LoadingFragment extends Fragment {
     /**
      * Maximum index icon number inside mArrayIcon (fab icons array).
      */
-    private static final int MAX_ICON_INDEX = 7;
+    private static final int MAX_ICON_INDEX = 8;
     /**
      * Offset time to show loading icon before hide-change.
      */
@@ -110,14 +110,15 @@ public class LoadingFragment extends Fragment {
      */
     private void setIconsArrayResources() {
         mArrayIcons = new ArrayList<>();
-        mArrayIcons.add(android.R.drawable.ic_dialog_map);
-        mArrayIcons.add(android.R.drawable.ic_dialog_info);
-        mArrayIcons.add(android.R.drawable.ic_dialog_alert);
-        mArrayIcons.add(android.R.drawable.ic_dialog_email);
-        mArrayIcons.add(android.R.drawable.ic_dialog_dialer);
-        mArrayIcons.add(android.R.drawable.ic_dialog_map);
-        mArrayIcons.add(android.R.drawable.ic_dialog_info);
-        mArrayIcons.add(android.R.drawable.ic_dialog_alert);
+        mArrayIcons.add(R.drawable.ic_loading_1);
+        mArrayIcons.add(R.drawable.ic_loading_2);
+        mArrayIcons.add(R.drawable.ic_loading_3);
+        mArrayIcons.add(R.drawable.ic_loading_4);
+        mArrayIcons.add(R.drawable.ic_loading_5);
+        mArrayIcons.add(R.drawable.ic_loading_6);
+        mArrayIcons.add(R.drawable.ic_loading_7);
+        mArrayIcons.add(R.drawable.ic_loading_8);
+        mArrayIcons.add(R.drawable.ic_loading_9);
         // Shuffle icons inside array.
         Collections.shuffle(mArrayIcons);
     }

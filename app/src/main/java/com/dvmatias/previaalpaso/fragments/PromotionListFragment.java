@@ -2,11 +2,8 @@ package com.dvmatias.previaalpaso.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,23 +19,19 @@ import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
  * list.
  */
 
-public class PromotionsFragment extends Fragment {
+public class PromotionListFragment extends Fragment {
     /**
      * TAG.
      */
-    public static final String TAG = PromotionsFragment.class.getSimpleName();
+    public static final String TAG = PromotionListFragment.class.getSimpleName();
     /**
      * Loading Fragment Instance.
      */
-    public static final PromotionsFragment INSTANCE = newInstance();
+    public static final PromotionListFragment INSTANCE = newInstance();
     /**
      * Previa custom fragment manager.
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
-    /**
-     * FAB.
-     */
-    private static FloatingActionButton fab;
     /**
      * Recycler view.
      */
@@ -49,17 +42,17 @@ public class PromotionsFragment extends Fragment {
      * TODO (desc)
      * @return
      */
-    private static PromotionsFragment newInstance() {
-        PromotionsFragment promotionsFragment = new PromotionsFragment();
-        return promotionsFragment;
+    private static PromotionListFragment newInstance() {
+        PromotionListFragment promotionListFragment = new PromotionListFragment();
+        return promotionListFragment;
     }
 
     /**
-     * Get {@link PromotionsFragment} instance. </br>
+     * Get {@link PromotionListFragment} instance. </br>
      *
-     * @return [PromotionsFragment] Instance.
+     * @return [PromotionListFragment] Instance.
      */
-    private static PromotionsFragment getInstance()  {
+    private static PromotionListFragment getInstance()  {
         return INSTANCE;
     }
 
@@ -67,17 +60,8 @@ public class PromotionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_promotions, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_promotion_list, container, false);
 
-        // Floating button
-        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         rvPromotions = (RecyclerView) rootView.findViewById(R.id.rv_promotions);
 
         rvPromotions.setLayoutManager(

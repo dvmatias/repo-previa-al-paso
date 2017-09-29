@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -26,11 +27,10 @@ import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
 import com.dvmatias.previaalpaso.fragments.LocationFragment;
 import com.dvmatias.previaalpaso.fragments.OnlineChatFragment;
-import com.dvmatias.previaalpaso.fragments.PromotionsFragment;
+import com.dvmatias.previaalpaso.fragments.PromotionListFragment;
 import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
 import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
-import com.dvmatias.previaalpaso.ui.LoadingView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity
      */
     private static ActionBarDrawerToggle mDrawerToggle;
     /**
+     * FAB.
+     */
+    private static FloatingActionButton fab;
+    /**
      * Previa custom fragment manager.
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
@@ -78,6 +82,16 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+        // Floating button
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         // Navigation
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -91,10 +105,10 @@ public class MainActivity extends AppCompatActivity
                     LoadingFragment.getInstance(),
                     LoadingFragment.TAG);
         } else {
-            // Replace PromotionsFragment.
+            // Replace PromotionListFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
-                    PromotionsFragment.INSTANCE,
-                    PromotionsFragment.TAG);
+                    PromotionListFragment.INSTANCE,
+                    PromotionListFragment.TAG);
         }
     }
 
@@ -119,10 +133,10 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onLoadingCompleted() {
             setDrawerState(true);
-            // Replace PromotionsFragment.
+            // Replace PromotionListFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
-                    PromotionsFragment.INSTANCE,
-                    PromotionsFragment.TAG);
+                    PromotionListFragment.INSTANCE,
+                    PromotionListFragment.TAG);
         }
 
         @Override
@@ -215,8 +229,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_item_promotions) {
             mPreviaFragmentManager.replace(R.id.container_main,
-                    PromotionsFragment.INSTANCE,
-                    PromotionsFragment.TAG);
+                    PromotionListFragment.INSTANCE,
+                    PromotionListFragment.TAG);
         } else if (id == R.id.nav_item_online_chat) {
             mPreviaFragmentManager.replace(R.id.container_main,
                     OnlineChatFragment.INSTANCE,

@@ -67,7 +67,6 @@ public class PromotionsAdapter extends
         TextView tvItemPromotionDescription;
         TextView tvItemPromotionPrice;
         ImageView ivItemPromotionShare;
-        ImageView ivItemPromotionLike;
         ImageView ivItemPromotionBuy;
 
         public PromotionsViewHolder(View itemView) {
@@ -80,7 +79,6 @@ public class PromotionsAdapter extends
                     (TextView) itemView.findViewById(R.id.tv_item_promotion_description);
             tvItemPromotionPrice = (TextView) itemView.findViewById(R.id.tv_item_promotion_price);
             ivItemPromotionShare = (ImageView) itemView.findViewById(R.id.iv_item_promotion_share);
-            ivItemPromotionLike = (ImageView) itemView.findViewById(R.id.iv_item_promotion_like);
             ivItemPromotionBuy = (ImageView) itemView.findViewById(R.id.iv_item_promotion_buy);
         }
     }
