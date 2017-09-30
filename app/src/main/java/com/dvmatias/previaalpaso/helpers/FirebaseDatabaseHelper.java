@@ -71,6 +71,14 @@ public class FirebaseDatabaseHelper {
      */
     private static final String KEY_PRICE = "price";
     /**
+     * Key name for the promotion/product -> rating child.
+     */
+    private static final String KEY_RATING = "rating";
+    /**
+     * Key name for the promotion/product -> votes count child.
+     */
+    private static final String KEY_VOTES_COUNT = "votes_count";
+    /**
      * Key name for the promotion -> products_id child.
      */
     private static final String KEY_PRODUCTS_ID = "products_id";
@@ -325,6 +333,9 @@ public class FirebaseDatabaseHelper {
                                 .child(KEY_DESCRIPTION).getValue());
                         promotion.setName((String) dataSnapshot.child(KEY_NAME).getValue());
                         promotion.setPrice((long) dataSnapshot.child(KEY_PRICE).getValue());
+                        promotion.setVotes_count(
+                                (long) dataSnapshot.child(KEY_VOTES_COUNT).getValue());
+                        promotion.setRating((double) dataSnapshot.child(KEY_RATING).getValue());
                         promotion.setProducts_id((ArrayList<Long>) dataSnapshot
                                 .child(KEY_PRODUCTS_ID).getValue());
                         promotion.setSponsor(dataSnapshot
@@ -340,8 +351,8 @@ public class FirebaseDatabaseHelper {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    long timeOffset =
-                                            Calendar.getInstance().getTimeInMillis() - mTaskStartTime;
+                                    long timeOffset = Calendar
+                                            .getInstance().getTimeInMillis() - mTaskStartTime;
                                     if (timeOffset < MIN_DOWNLOAD_TASK_DURATION) {
                                         try {
                                             Thread.sleep(MIN_DOWNLOAD_TASK_DURATION - timeOffset);

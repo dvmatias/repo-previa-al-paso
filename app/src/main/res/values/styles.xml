@@ -24,21 +24,4 @@
     <style name="NavigationDrawerStyle">
         <item name="android:textSize">18sp</item>
     </style>
-
-    <!-- Promotion Item Title -->
-    <style name="PromotionItemTitle" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:textColor">@color/colorPrimaryLight</item>
-        <item name="android:textSize">@dimen/abc_text_size_medium_material</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:lines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <!-- Promotion Item Description -->
-    <style name="PromotionItemDescription" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">@color/colorDialogMessage</item>
-        <item name="android:textSize">@dimen/abc_text_size_body_1_material</item>
-        <item name="android:lines">2</item>
-        <item name="android:ellipsize">end</item>
-    </style>
 </resources>

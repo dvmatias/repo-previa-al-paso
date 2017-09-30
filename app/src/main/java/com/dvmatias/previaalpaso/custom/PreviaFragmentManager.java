@@ -46,7 +46,7 @@ public class PreviaFragmentManager {
         FragmentTransaction transaction = mPreviaFragmentManager.beginTransaction();
         transaction.replace(containerViewId, fragment, tag);
         transaction.addToBackStack(tag);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
 
         this.currentFragmentTag = tag;
 

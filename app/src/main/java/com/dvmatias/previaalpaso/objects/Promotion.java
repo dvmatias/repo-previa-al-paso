@@ -1,8 +1,6 @@
 package com.dvmatias.previaalpaso.objects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Created by dvmatias on 22/09/17. Promotion class designed to create Promotion
@@ -14,6 +12,8 @@ public class Promotion {
     private String name;
     private ArrayList<Long> products_id;
     private long price;
+    private double rating;
+    private long votes_count;
     private String description;
     private String type;
     private Sponsor sponsor;
@@ -30,15 +30,21 @@ public class Promotion {
      * @param name []
      * @param products_id []
      * @param price []
+     * @param rating []
+     * @param votes_count []
      * @param description []
      * @param type []
      * @param sponsor []
      */
-    public Promotion(String url_img, String name, ArrayList<Long> products_id, long price, String description, String type, Sponsor sponsor) {
+    public Promotion(String url_img, String name, ArrayList<Long> products_id, long price,
+                     double rating, long votes_count, String description, String type,
+                     Sponsor sponsor) {
         this.url_img = url_img;
         this.name = name;
         this.products_id = products_id;
         this.price = price;
+        this.rating = rating;
+        this.votes_count = votes_count;
         this.description = description;
         this.type = type;
         this.sponsor = sponsor;
@@ -74,6 +80,22 @@ public class Promotion {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public long getVotes_count() {
+        return votes_count;
+    }
+
+    public void setVotes_count(long votes_count) {
+        this.votes_count = votes_count;
     }
 
     public String getDescription() {

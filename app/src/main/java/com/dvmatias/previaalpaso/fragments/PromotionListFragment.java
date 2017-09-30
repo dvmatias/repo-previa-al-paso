@@ -1,9 +1,14 @@
 package com.dvmatias.previaalpaso.fragments;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +37,10 @@ public class PromotionListFragment extends Fragment {
      * Previa custom fragment manager.
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
+    /**
+     * FAB.
+     */
+    private static FloatingActionButton fab;
     /**
      * Recycler view.
      */
@@ -62,10 +71,21 @@ public class PromotionListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_promotion_list, container, false);
 
+
+        // Floating button
+        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                // TODO: Implement action.
+            }
+        });
         rvPromotions = (RecyclerView) rootView.findViewById(R.id.rv_promotions);
 
         rvPromotions.setLayoutManager(
-                new GridLayoutManager(getActivity().getApplicationContext(), 2));
+                new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         PromotionsAdapter adapter =
                 new PromotionsAdapter(FirebaseDatabaseHelper.getPromotions()

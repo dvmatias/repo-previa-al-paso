@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.objects.Promotion;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -64,10 +67,14 @@ public class PromotionsAdapter extends
         CardView cvItemPromotion;
         ImageView ivItemPromotionImage;
         TextView tvItemPromotionName;
+        RatingBar rbItemPromotion;
+        TextView tvItemPromotionVotesCount;
         TextView tvItemPromotionDescription;
+        TextView tvItemPromotionStock;
         TextView tvItemPromotionPrice;
+        ImageView ivItemPromotionLike;
         ImageView ivItemPromotionShare;
-        ImageView ivItemPromotionBuy;
+        TextView tvItemPromotionType;
 
         public PromotionsViewHolder(View itemView) {
             super(itemView);
@@ -75,11 +82,16 @@ public class PromotionsAdapter extends
             cvItemPromotion = (CardView) itemView.findViewById(R.id.cv_item_promotion);
             ivItemPromotionImage = (ImageView) itemView.findViewById(R.id.iv_item_promotion_image);
             tvItemPromotionName = (TextView) itemView.findViewById(R.id.tv_item_promotion_name);
+            rbItemPromotion = (RatingBar) itemView.findViewById(R.id.rb_item_promotion);
+            tvItemPromotionVotesCount =
+                    (TextView) itemView.findViewById(R.id.tv_item_promotion_votes_count);
             tvItemPromotionDescription =
                     (TextView) itemView.findViewById(R.id.tv_item_promotion_description);
+            tvItemPromotionStock = (TextView) itemView.findViewById(R.id.tv_item_promotion_stock);
             tvItemPromotionPrice = (TextView) itemView.findViewById(R.id.tv_item_promotion_price);
+            ivItemPromotionLike = (ImageView) itemView.findViewById(R.id.iv_item_promotion_like);
             ivItemPromotionShare = (ImageView) itemView.findViewById(R.id.iv_item_promotion_share);
-            ivItemPromotionBuy = (ImageView) itemView.findViewById(R.id.iv_item_promotion_buy);
+            tvItemPromotionType = (TextView) itemView.findViewById(R.id.tv_item_promotion_type);
         }
     }
 
@@ -95,45 +107,51 @@ public class PromotionsAdapter extends
     @Override
     public void onBindViewHolder(PromotionsViewHolder holder, int position) {
         // TODO set image.
+
         holder.tvItemPromotionName.setText(mPromotionArrayList.get(position).getName());
-        holder.tvItemPromotionDescription.setText(mPromotionArrayList.get(position).getDescription());
+        holder.rbItemPromotion.setRating((float) mPromotionArrayList.get(position).getRating());
+        holder.tvItemPromotionVotesCount.setText(String.format(
+                Locale.getDefault(), "%d", mPromotionArrayList.get(position).getVotes_count()) + " Votos");
+        holder.tvItemPromotionDescription
+                .setText(mPromotionArrayList.get(position).getDescription());
         holder.tvItemPromotionPrice.setText(getStringPrice(position));
+        holder.tvItemPromotionType.setText(mPromotionArrayList.get(position).getType());
 
         holder.cvItemPromotion.setTag(position);
         holder.cvItemPromotion.setOnClickListener(cardViewOnClickListener);
 
-        setCardViewParams(holder, position);
+        // TODO set like proper icon (border or fill)
+        holder.ivItemPromotionLike.setOnClickListener(likeOnClickListener);
+
+        holder.ivItemPromotionShare.setOnClickListener(shareOnClickListener);
+
+        // TODO set STOCK right color (TextView)
     }
 
     /**
-     * TODO desc.
-     * @param position
+     * Like button on click listener.
      */
-    private void setCardViewParams(PromotionsViewHolder holder, int position) {
-        int pos = position+1;
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        params.topMargin = dpToPx(12);
-        if ((pos%2) == 0) {
-            params.setMarginStart(dpToPx(CV_MID_MARGIN));
-            params.setMarginEnd(dpToPx(CV_MARGIN));
-        } else {
-            params.setMarginStart(dpToPx(CV_MARGIN));
-            params.setMarginEnd(dpToPx(CV_MID_MARGIN));
+    private View.OnClickListener likeOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(mContext, "Like clicked!", Toast.LENGTH_SHORT).show();
+            // TODO implemente action
         }
-        if (pos == getItemCount()) {
-            params.bottomMargin = dpToPx(12);
-        }
-        holder.cvItemPromotion.setLayoutParams(params);
-    }
+    };
 
     /**
-     * TODO (desd)
-     * @param dp
-     * @return
+     * Share button on click listener.
+     */
+    private View.OnClickListener shareOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(mContext, "Share clicked!", Toast.LENGTH_SHORT).show();
+            // TODO implemente action
+        }
+    };
+
+    /**
+     * Transform dp units into px.
      */
     private int dpToPx(int dp) {
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
@@ -141,12 +159,10 @@ public class PromotionsAdapter extends
     }
 
     /**
-     * TODO (desd)
-     * @param position
-     * @return
+     * Form the proper text for the price TextView.
      */
     private String getStringPrice(int position) {
-        return Objects.toString("$" + mPromotionArrayList.get(position).getPrice() + ",0", "$???");
+        return Objects.toString("$" + mPromotionArrayList.get(position).getPrice(), "$???");
     }
 
     @Override

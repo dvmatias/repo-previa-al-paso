@@ -56,10 +56,6 @@ public class MainActivity extends AppCompatActivity
      */
     private static ActionBarDrawerToggle mDrawerToggle;
     /**
-     * FAB.
-     */
-    private static FloatingActionButton fab;
-    /**
      * Previa custom fragment manager.
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
@@ -81,16 +77,6 @@ public class MainActivity extends AppCompatActivity
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-
-        // Floating button
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         // Navigation
         mNavigationView = findViewById(R.id.nav_view);

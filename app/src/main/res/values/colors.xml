@@ -5,7 +5,11 @@
     <color name="colorPrimaryLight">#D26772</color>
     <color name="colorAccent">#FFFF00</color>
 
-    <color name="colorActivityBackground">#FAFAFA</color>
+    <color name="colorPrimaryText">#76000000</color>
+    <color name="colorSecondaryText">#36000000</color>
+    <color name="colorDisableHintText">#26000000</color>
+
+    <color name="colorActivityBackground">#fafafa</color>
     <color name="colorNavigationMenuBackground">#232323</color>
 
     <color name="colorDialogTitle">@color/colorPrimary</color>
