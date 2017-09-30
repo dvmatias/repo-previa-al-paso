@@ -22,4 +22,7 @@
 
     <!-- Fragment Loading -->
     <string name="loading_failed">:( "\n\n"Toca la pantalla"\n"para intentarlo nuevamente.</string>
+
+    <!-- Promotion item -->
+    <string name="votes_count_place_holder">%1$d Votos</string>
 </resources>

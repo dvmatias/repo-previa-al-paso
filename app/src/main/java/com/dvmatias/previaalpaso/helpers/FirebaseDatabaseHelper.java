@@ -333,6 +333,7 @@ public class FirebaseDatabaseHelper {
                                 .child(KEY_DESCRIPTION).getValue());
                         promotion.setName((String) dataSnapshot.child(KEY_NAME).getValue());
                         promotion.setPrice((long) dataSnapshot.child(KEY_PRICE).getValue());
+                        promotion.setId((long) dataSnapshot.child(KEY_ID).getValue());
                         promotion.setVotes_count(
                                 (long) dataSnapshot.child(KEY_VOTES_COUNT).getValue());
                         promotion.setRating((double) dataSnapshot.child(KEY_RATING).getValue());

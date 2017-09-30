@@ -1,6 +1,9 @@
 package com.dvmatias.previaalpaso.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -15,7 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.helpers.SharedPreferenceHelper;
 import com.dvmatias.previaalpaso.objects.Promotion;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -33,14 +39,6 @@ public class PromotionsAdapter extends
      */
     @SuppressWarnings("unused")
     private final static String TAG = PromotionsAdapter.class.getSimpleName();
-    /**
-     * Margin start in dp.
-     */
-    private final static int CV_MARGIN = 20;
-    /**
-     * Margin start in dp.
-     */
-    private final static int CV_MID_MARGIN = CV_MARGIN/2;
     /**
      * Promotions array list.
      */
@@ -63,7 +61,7 @@ public class PromotionsAdapter extends
     /**
      * ViewHolder class.
      */
-    public class PromotionsViewHolder  extends RecyclerView.ViewHolder{
+    class PromotionsViewHolder  extends RecyclerView.ViewHolder{
         CardView cvItemPromotion;
         ImageView ivItemPromotionImage;
         TextView tvItemPromotionName;
@@ -76,22 +74,22 @@ public class PromotionsAdapter extends
         ImageView ivItemPromotionShare;
         TextView tvItemPromotionType;
 
-        public PromotionsViewHolder(View itemView) {
+        PromotionsViewHolder(View itemView) {
             super(itemView);
 
-            cvItemPromotion = (CardView) itemView.findViewById(R.id.cv_item_promotion);
-            ivItemPromotionImage = (ImageView) itemView.findViewById(R.id.iv_item_promotion_image);
-            tvItemPromotionName = (TextView) itemView.findViewById(R.id.tv_item_promotion_name);
-            rbItemPromotion = (RatingBar) itemView.findViewById(R.id.rb_item_promotion);
+            cvItemPromotion = itemView.findViewById(R.id.cv_item_promotion);
+            ivItemPromotionImage = itemView.findViewById(R.id.iv_item_promotion_image);
+            tvItemPromotionName = itemView.findViewById(R.id.tv_item_promotion_name);
+            rbItemPromotion = itemView.findViewById(R.id.rb_item_promotion);
             tvItemPromotionVotesCount =
-                    (TextView) itemView.findViewById(R.id.tv_item_promotion_votes_count);
+                    itemView.findViewById(R.id.tv_item_promotion_votes_count);
             tvItemPromotionDescription =
-                    (TextView) itemView.findViewById(R.id.tv_item_promotion_description);
-            tvItemPromotionStock = (TextView) itemView.findViewById(R.id.tv_item_promotion_stock);
-            tvItemPromotionPrice = (TextView) itemView.findViewById(R.id.tv_item_promotion_price);
-            ivItemPromotionLike = (ImageView) itemView.findViewById(R.id.iv_item_promotion_like);
-            ivItemPromotionShare = (ImageView) itemView.findViewById(R.id.iv_item_promotion_share);
-            tvItemPromotionType = (TextView) itemView.findViewById(R.id.tv_item_promotion_type);
+                    itemView.findViewById(R.id.tv_item_promotion_description);
+            tvItemPromotionStock = itemView.findViewById(R.id.tv_item_promotion_stock);
+            tvItemPromotionPrice = itemView.findViewById(R.id.tv_item_promotion_price);
+            ivItemPromotionLike = itemView.findViewById(R.id.iv_item_promotion_like);
+            ivItemPromotionShare = itemView.findViewById(R.id.iv_item_promotion_share);
+            tvItemPromotionType = itemView.findViewById(R.id.tv_item_promotion_type);
         }
     }
 
@@ -110,8 +108,10 @@ public class PromotionsAdapter extends
 
         holder.tvItemPromotionName.setText(mPromotionArrayList.get(position).getName());
         holder.rbItemPromotion.setRating((float) mPromotionArrayList.get(position).getRating());
-        holder.tvItemPromotionVotesCount.setText(String.format(
-                Locale.getDefault(), "%d", mPromotionArrayList.get(position).getVotes_count()) + " Votos");
+        holder.tvItemPromotionVotesCount.setText(
+                String.format(mContext.getResources().getString(
+                        R.string.votes_count_place_holder),
+                        mPromotionArrayList.get(position).getVotes_count()));
         holder.tvItemPromotionDescription
                 .setText(mPromotionArrayList.get(position).getDescription());
         holder.tvItemPromotionPrice.setText(getStringPrice(position));
@@ -120,7 +120,9 @@ public class PromotionsAdapter extends
         holder.cvItemPromotion.setTag(position);
         holder.cvItemPromotion.setOnClickListener(cardViewOnClickListener);
 
-        // TODO set like proper icon (border or fill)
+        setLikeIcon(holder.ivItemPromotionLike,
+                mPromotionArrayList.get(position).getId());
+        holder.ivItemPromotionLike.setTag(mPromotionArrayList.get(position).getId());
         holder.ivItemPromotionLike.setOnClickListener(likeOnClickListener);
 
         holder.ivItemPromotionShare.setOnClickListener(shareOnClickListener);
@@ -133,11 +135,49 @@ public class PromotionsAdapter extends
      */
     private View.OnClickListener likeOnClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
-            Toast.makeText(mContext, "Like clicked!", Toast.LENGTH_SHORT).show();
-            // TODO implemente action
+        public void onClick(final View view) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (SharedPreferenceHelper
+                                .isAlreadyLikePromotion(mContext, (long)view.getTag())) {
+                            SharedPreferenceHelper.unlikePromotion(mContext, (long) view.getTag());
+                        } else {
+                            SharedPreferenceHelper.likePromotion(mContext, (long) view.getTag());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+            }).start();
         }
     };
+
+    /**
+     * According it the Promotion is already liked by the user, the "like" icon is set to the
+     * proper drawable resource.
+     *
+     * @param promotionId [long] Id of the promotion.
+     */
+    private void setLikeIcon(View v, long promotionId) {
+        try {
+            if (SharedPreferenceHelper.isAlreadyLikePromotion(mContext, promotionId)) {
+                ((ImageView) v).setImageResource(R.drawable.ic_like_black_24dp);
+            } else {
+                ((ImageView) v).setImageResource(R.drawable.ic_like_border_black_24dp);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Share button on click listener.
@@ -149,14 +189,6 @@ public class PromotionsAdapter extends
             // TODO implemente action
         }
     };
-
-    /**
-     * Transform dp units into px.
-     */
-    private int dpToPx(int dp) {
-        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-    }
 
     /**
      * Form the proper text for the price TextView.

@@ -17,6 +17,7 @@ public class Promotion {
     private String description;
     private String type;
     private Sponsor sponsor;
+    private long id;
 
     /**
      * Empty constructor.
@@ -35,10 +36,11 @@ public class Promotion {
      * @param description []
      * @param type []
      * @param sponsor []
+     * @param id []
      */
     public Promotion(String url_img, String name, ArrayList<Long> products_id, long price,
                      double rating, long votes_count, String description, String type,
-                     Sponsor sponsor) {
+                     Sponsor sponsor, long id) {
         this.url_img = url_img;
         this.name = name;
         this.products_id = products_id;
@@ -48,6 +50,7 @@ public class Promotion {
         this.description = description;
         this.type = type;
         this.sponsor = sponsor;
+        this.id = id;
     }
 
     public String getUrl_img() {
@@ -122,6 +125,14 @@ public class Promotion {
         this.sponsor = sponsor;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Promotion{" +
@@ -129,9 +140,12 @@ public class Promotion {
                 ", name='" + name + '\'' +
                 ", products_id=" + products_id +
                 ", price=" + price +
+                ", rating=" + rating +
+                ", votes_count=" + votes_count +
                 ", description='" + description + '\'' +
                 ", type='" + type + '\'' +
-                ", sponsor=" + sponsor.toString() +
+                ", sponsor=" + sponsor +
+                ", id=" + id +
                 '}';
     }
 }
