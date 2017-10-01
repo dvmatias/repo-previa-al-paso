@@ -489,7 +489,6 @@ public class FirebaseDatabaseHelper {
      * If both, promotions and products are ready, set the stock of every promotion object.
      */
     private static void setPromotionsStock() {
-        Log.d(TAG, "*** setPromotionsStock()");
         for (Promotion promotion : mPromotionsArray) {
             int occurrences = 0;
             ArrayList<Long> productsId = new ArrayList<>();

@@ -20,8 +20,4 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="NavigationDrawerStyle">
-        <item name="android:textSize">18sp</item>
-    </style>
 </resources>
