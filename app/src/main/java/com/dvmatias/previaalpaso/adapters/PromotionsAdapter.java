@@ -72,7 +72,6 @@ public class PromotionsAdapter extends
         TextView tvItemPromotionStock;
         TextView tvItemPromotionPrice;
         ImageView ivItemPromotionLike;
-        ImageView ivItemPromotionShare;
         TextView tvItemPromotionType;
 
         PromotionsViewHolder(View itemView) {
@@ -89,7 +88,6 @@ public class PromotionsAdapter extends
             tvItemPromotionStock = itemView.findViewById(R.id.tv_item_promotion_stock);
             tvItemPromotionPrice = itemView.findViewById(R.id.tv_item_promotion_price);
             ivItemPromotionLike = itemView.findViewById(R.id.iv_item_promotion_like);
-            ivItemPromotionShare = itemView.findViewById(R.id.iv_item_promotion_share);
             tvItemPromotionType = itemView.findViewById(R.id.tv_item_promotion_type);
         }
     }
@@ -125,8 +123,6 @@ public class PromotionsAdapter extends
                 mPromotionArrayList.get(position).getId());
         holder.ivItemPromotionLike.setTag(mPromotionArrayList.get(position).getId());
         holder.ivItemPromotionLike.setOnClickListener(likeOnClickListener);
-
-        holder.ivItemPromotionShare.setOnClickListener(shareOnClickListener);
 
         setStockTextColor(holder.tvItemPromotionStock, mPromotionArrayList.get(position));
     }
@@ -196,17 +192,6 @@ public class PromotionsAdapter extends
             e.printStackTrace();
         }
     }
-
-    /**
-     * Share button on click listener.
-     */
-    private View.OnClickListener shareOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(mContext, "Share clicked!", Toast.LENGTH_SHORT).show();
-            // TODO implemente action
-        }
-    };
 
     /**
      * Form the proper text for the price TextView.
