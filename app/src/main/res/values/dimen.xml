@@ -12,10 +12,10 @@
     <!-- PROMOTION LIST ITEM -->
     <!-- Card view -->
     <dimen name="cv_item_promotion_margin_top">12dp</dimen>
-    <dimen name="cv_item_promotion_margin_start">8dp</dimen>
-    <dimen name="cv_item_promotion_margin_end">8dp</dimen>
+    <dimen name="cv_item_promotion_margin_start">0dp</dimen>
+    <dimen name="cv_item_promotion_margin_end">0dp</dimen>
     <dimen name="cv_item_promotion_elevation">2dp</dimen>
-    <dimen name="cv_item_promotion_corner_radius">2dp</dimen>
+    <dimen name="cv_item_promotion_corner_radius">0dp</dimen>
     <!-- Image -->
     <dimen name="iv_item_promotion_size">100dp</dimen>
     <!-- Name -->
@@ -52,7 +52,9 @@
     <dimen name="ll_item_promotion_buttons_container_margin_bottom">4dp</dimen>
     <dimen name="ll_item_promotion_buttons_container_margin_end">4dp</dimen>
     <!-- Like and Share buttons -->
-    <dimen name="iv_item_promotion_like_padding">2dp</dimen>
+    <dimen name="iv_item_promotion_like_share_padding">2dp</dimen>
+    <!-- Like and Share buttons separator -->
+    <dimen name="iv_item_promotion_like_share_separator_height">8dp</dimen>
     <!-- Type -->
     <dimen name="tv_item_promotion_type_text_size">12sp</dimen>
     <dimen name="tv_item_promotion_type_padding_start">8dp</dimen>
