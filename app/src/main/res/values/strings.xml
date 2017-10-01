@@ -25,4 +25,6 @@
 
     <!-- Promotion item -->
     <string name="votes_count_place_holder">%1$d Votos</string>
+    <string name="stock">stock</string>
+    <string name="stock_price_separator">&#160;&#160;·&#160;&#160;</string>
 </resources>

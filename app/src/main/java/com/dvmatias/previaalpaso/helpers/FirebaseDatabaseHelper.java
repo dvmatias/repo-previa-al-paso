@@ -2,7 +2,9 @@ package com.dvmatias.previaalpaso.helpers;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.LongSparseArray;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.dvmatias.previaalpaso.activities.MainActivity;
 import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
@@ -18,6 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by dvmatias on 22/09/17. Firebase Database Helper provides tools to download
@@ -135,6 +142,10 @@ public class FirebaseDatabaseHelper {
      */
     private final static int MSG_WHAT_DOWNLOAD_PRODUCTS = 723;
     /**
+     * Message what value to indicate the handler that the products must be downloaded.
+     */
+    private final static int MSG_WHAT_SET_STOCK = 762;
+    /**
      * Message what value to indicate the handler that the download has been completed.
      */
     private final static int MGS_WHAT_DOWNLOAD_COMPLETED = 351;
@@ -249,6 +260,9 @@ public class FirebaseDatabaseHelper {
                     break;
                 case MSG_WHAT_DOWNLOAD_PRODUCTS:
                     downloadProducts();
+                    break;
+                case MSG_WHAT_SET_STOCK:
+                    setPromotionsStock();
                     break;
                 case MGS_WHAT_DOWNLOAD_COMPLETED:
                     mDatabaseReference.removeEventListener(mChildEventListener);
@@ -434,9 +448,9 @@ public class FirebaseDatabaseHelper {
                                     }
 
                                     if (isPromotionsAndProductsReady()) {
-                                        Message messageDownloadCompleted = new Message();
-                                        messageDownloadCompleted.what = MGS_WHAT_DOWNLOAD_COMPLETED;
-                                        DownloadHandler.sendMessage(messageDownloadCompleted);
+                                        Message messageSetStock = new Message();
+                                        messageSetStock.what = MSG_WHAT_SET_STOCK;
+                                        DownloadHandler.sendMessage(messageSetStock);
                                     } else {
                                         Log.d(TAG, "*** C");
                                         Message msgDownloadFailed = new Message();
@@ -468,5 +482,49 @@ public class FirebaseDatabaseHelper {
 
                     }
                 });
+    }
+
+
+    /**
+     * If both, promotions and products are ready, set the stock of every promotion object.
+     */
+    private static void setPromotionsStock() {
+        Log.d(TAG, "*** setPromotionsStock()");
+        for (Promotion promotion : mPromotionsArray) {
+            int occurrences = 0;
+            ArrayList<Long> productsId = new ArrayList<>();
+            productsId = promotion.getProducts_id();
+            Collections.sort(productsId);
+
+            HashMap<Long, Integer> map = new HashMap<>();
+            for (int cont=0; cont<productsId.size();) {
+                int frequency = Collections.frequency(productsId, productsId.get(cont));
+                map.put(productsId.get(cont), frequency);
+                cont += frequency;
+            }
+            int mapSize = map.size();
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                for (Product product : mProductsArray) {
+                    long promotionProductId = (long) pair.getKey();
+                    int promotionProductFrequency = (int) pair.getValue();
+                    long productId = product.getId();
+                    int productStock = (int) product.getStock();
+
+                    if (promotionProductId == productId
+                            && promotionProductFrequency <= productStock) {
+                        occurrences++;
+                    }
+                }
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+
+            promotion.setInStock(occurrences == mapSize);
+        }
+
+        Message messageDownloadCompleted = new Message();
+        messageDownloadCompleted.what = MGS_WHAT_DOWNLOAD_COMPLETED;
+        DownloadHandler.sendMessage(messageDownloadCompleted);
     }
 }

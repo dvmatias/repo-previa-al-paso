@@ -5,14 +5,14 @@
     android:id="@+id/cv_item_promotion"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
+    android:layout_marginTop="@dimen/cv_item_promotion_margin_top"
+    android:layout_marginStart="@dimen/cv_item_promotion_margin_start"
+    android:layout_marginEnd="@dimen/cv_item_promotion_margin_end"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/colorWhite"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="2dp">
+    app:cardElevation="@dimen/cv_item_promotion_elevation"
+    app:cardCornerRadius="@dimen/cv_item_promotion_corner_radius">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +21,9 @@
 
         <ImageView
             android:id="@+id/iv_item_promotion_image"
-            android:layout_width="130dp"
+            android:layout_width="@dimen/iv_item_promotion_width"
             android:layout_height="match_parent"
-            android:background="#AF000000"/>
+            android:contentDescription="@string/app_name"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -34,137 +34,125 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:paddingTop="8dp" >
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
 
                         <TextView
                             android:id="@+id/tv_item_promotion_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Fernet con Coca"
-                            android:textColor="#000000"
-                            android:textSize="18sp"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:layout_marginBottom="4dp"
-                            android:lines="1"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/tv_item_promotion_name_text_size"
+                            android:paddingStart="@dimen/tv_item_promotion_name_padding_start"
+                            android:paddingEnd="@dimen/tv_item_promotion_name_padding_end"
+                            android:layout_marginBottom="@dimen/tv_item_promotion_name_margin_bottom"
+                            android:lines="@integer/tv_item_promotion_name_lines"
                             android:ellipsize="end"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
                             android:orientation="horizontal">
 
                             <RatingBar
                                 android:id="@+id/rb_item_promotion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="?android:attr/ratingBarStyleSmall"
-                                android:numStars = "5"
-                                android:rating   = "4"
-                                android:layout_gravity="center_vertical"/>
+                                android:layout_marginStart="@dimen/rb_item_promotion_margin_start"
+                                android:numStars="@integer/rb_item_promotion_num_stars"
+                                android:layout_gravity="center_vertical"
+                                style="?android:attr/ratingBarStyleSmall"/>
 
                             <TextView
                                 android:id="@+id/tv_item_promotion_votes_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="32 votos"
-                                android:layout_marginStart="8dp"
-                                android:textColor="#87000000"
-                                android:textSize="14sp"
-                                android:gravity="clip_vertical"/>
+                                android:textSize="@dimen/tv_item_promotion_votes_count_text_size"
+                                android:textColor="@color/colorSecondaryText"
+                                android:layout_marginStart="@dimen/tv_item_promotion_votes_count_margin_start"
+                                android:layout_marginEnd="@dimen/tv_item_promotion_votes_count_margin_end"
+                                android:gravity="center_vertical"/>
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_item_promotion_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingStart="8dp"
-                            android:textColor="#87000000"
-                            android:textSize="14sp"
-                            android:lines="2"
-                            android:ellipsize="end"
-                            android:text="Descrición de la promo, lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet.  Lorem ipsum dolor sato sit amet. Lorem ipsum dolor sato sit amet."/>
+                            android:textSize="@dimen/tv_item_promotion_description_text_size"
+                            android:textColor="@color/colorSecondaryText"
+                            android:layout_marginStart="@dimen/tv_item_promotion_description_margin_start"
+                            android:lines="@integer/tv_item_promotion_description_lines"
+                            android:ellipsize="end" />
 
                         <LinearLayout
+                            android:id="@+id/ll_item_promotion_stock_and_price"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp">
+                            android:paddingStart="@dimen/ll_item_promotion_stock_and_price_padding_start"
+                            android:paddingEnd="@dimen/ll_item_promotion_stock_and_price_padding_end"
+                            android:paddingTop="@dimen/ll_item_promotion_stock_and_price_padding_top"
+                            android:paddingBottom="@dimen/ll_item_promotion_stock_and_price_padding_bottom">
 
                             <TextView
                                 android:id="@+id/tv_item_promotion_stock"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="stock"
-                                android:textSize="14sp"
+                                android:text="@string/stock"
+                                android:textSize="@dimen/tv_item_promotion_stock_text_size"
+                                android:textColor="@color/colorSecondaryText"
                                 android:textAllCaps="true"
-                                android:textColor="#019701"
-                                android:gravity="center_vertical"/>
+                                android:gravity="center_vertical" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="  ·  "
-                                android:textSize="18sp"
+                                android:text="@string/stock_price_separator"
+                                android:textSize="@dimen/tv_item_promotion_separator"
                                 android:textStyle="bold"
-                                android:textColor="#87000000"/>
+                                android:textColor="@color/colorSecondaryText" />
 
                             <TextView
                                 android:id="@+id/tv_item_promotion_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:gravity="center_vertical"
-                                android:text="$XXX"
-                                android:lines="1"
+                                android:textSize="@dimen/tv_item_promotion_price_text_size"
+                                android:textColor="@color/colorSecondaryText"
                                 android:includeFontPadding="false"
-                                android:lineSpacingExtra="0dp"
-                                android:textSize="14sp"
-                                android:textColor="#87000000"
-                                android:textStyle="normal"/>
+                                android:gravity="center_vertical" />
                         </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_item_promotion_buttons_container"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp">
+                    android:layout_marginTop="@dimen/ll_item_promotion_buttons_container_margin_top"
+                    android:layout_marginBottom="@dimen/ll_item_promotion_buttons_container_margin_bottom"
+                    android:layout_marginEnd="@dimen/ll_item_promotion_buttons_container_margin_end">
 
                     <ImageView
                         android:id="@+id/iv_item_promotion_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.6"
+                        android:tint="@color/colorRed"
+                        android:padding="@dimen/iv_item_promotion_like_share_padding"
                         android:src="@drawable/ic_like_border_black_24dp"
-                        android:tint="#FF0000"
-                        android:padding="2dp"/>
+                        android:contentDescription="@string/app_name"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp" />
+                        android:layout_height="@dimen/iv_item_promotion_like_share_separator_height" />
 
                     <ImageView
                         android:id="@+id/iv_item_promotion_share"
@@ -172,8 +160,8 @@
                         android:layout_height="wrap_content"
                         android:alpha="0.6"
                         android:src="@drawable/ic_share_black_24dp"
-                        android:padding="2dp"/>
-
+                        android:padding="@dimen/iv_item_promotion_like_share_padding"
+                        android:contentDescription="@string/app_name"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -181,98 +169,17 @@
                 android:id="@+id/tv_item_promotion_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
+                android:textSize="@dimen/tv_item_promotion_type_text_size"
+                android:textColor="@color/colorWhite"
+                android:background="@color/promotionTypeBackground"
+                android:paddingStart="@dimen/tv_item_promotion_type_padding_start"
+                android:paddingEnd="@dimen/tv_item_promotion_type_padding_end"
+                android:paddingTop="@dimen/tv_item_promotion_type_padding_top"
+                android:paddingBottom="@dimen/tv_item_promotion_type_padding_bottom"
                 android:gravity="center_vertical"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:background="#fbb619"
-                android:lines="1"
+                android:lines="@integer/tv_item_promotion_type_lines"
                 android:ellipsize="end"
-                android:textAllCaps="true"
-                android:text="Noches, fiestas, amigos, salidas"/>
+                android:textAllCaps="true"/>
         </LinearLayout>
     </LinearLayout>
-
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/iv_item_promotion_image"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:background="#AF000000"/>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="4dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_item_promotion_name"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--style="@style/PromotionItemTitle" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_item_promotion_description"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--style="@style/PromotionItemDescription" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:layout_marginTop="6dp"-->
-                <!--android:layout_marginBottom="6dp"-->
-                <!--android:background="#FF0000"/>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_gravity="end"-->
-                <!--android:gravity="center_vertical">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_item_promotion_price"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text="$XXX"-->
-                    <!--android:lines="1"-->
-                    <!--android:includeFontPadding="false"-->
-                    <!--android:lineSpacingExtra="0dp"-->
-                    <!--android:textSize="24sp"-->
-                    <!--android:textColor="#000000"-->
-                    <!--android:textStyle="normal"/>-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_item_promotion_share"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="4dp"-->
-                    <!--android:src="@drawable/ic_share_black_18dp"-->
-                    <!--android:alpha="0.6"/>-->
-
-                <!--<View-->
-                    <!--android:layout_width="10dp"-->
-                    <!--android:layout_height="match_parent" />-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_item_promotion_buy"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:padding="4dp"-->
-                    <!--android:src="@drawable/ic_add_shopping_cart_black_18dp"-->
-                    <!--android:alpha="0.6"/>-->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
 </android.support.v7.widget.CardView>

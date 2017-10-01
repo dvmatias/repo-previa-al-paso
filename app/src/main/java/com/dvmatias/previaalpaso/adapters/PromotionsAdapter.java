@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.helpers.SharedPreferenceHelper;
 import com.dvmatias.previaalpaso.objects.Promotion;
 
@@ -127,7 +128,24 @@ public class PromotionsAdapter extends
 
         holder.ivItemPromotionShare.setOnClickListener(shareOnClickListener);
 
-        // TODO set STOCK right color (TextView)
+        setStockTextColor(holder.tvItemPromotionStock, mPromotionArrayList.get(position));
+    }
+
+    /**
+     * Set green color text if the promo is in stock. Gray otherwise.
+     *
+     * @param v             [View] Stock TextView.
+     * @param promotion     [Promotion] Promotion object to evaluate stock.
+     */
+    private void setStockTextColor(View v, Promotion promotion) {
+        if (promotion.isInStock()) {
+            ((TextView) v).setTextColor(
+                    ContextCompat.getColor(mContext, R.color.colorStockHighlight));
+        } else {
+            ((TextView) v).setTextColor(
+                    ContextCompat.getColor(mContext, R.color.colorSecondaryText));
+        }
+
     }
 
     /**
@@ -214,7 +232,7 @@ public class PromotionsAdapter extends
         @Override
         public void onClick(View view) {
             Log.d(TAG, "*** clicked item = " + view.getTag());
-            
+            // TODO: implement action.
         }
     };
 }

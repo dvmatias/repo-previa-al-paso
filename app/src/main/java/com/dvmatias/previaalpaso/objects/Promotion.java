@@ -18,6 +18,7 @@ public class Promotion {
     private String type;
     private Sponsor sponsor;
     private long id;
+    private boolean inStock;
 
     /**
      * Empty constructor.
@@ -131,6 +132,14 @@ public class Promotion {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 
     @Override

@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- PROMOTION LIST ITEM -->
+    <!-- Card view -->
+    <dimen name="cv_item_promotion_margin_top">12dp</dimen>
+    <dimen name="cv_item_promotion_margin_start">12dp</dimen>
+    <dimen name="cv_item_promotion_margin_end">12dp</dimen>
+    <dimen name="cv_item_promotion_elevation">2dp</dimen>
+    <dimen name="cv_item_promotion_corner_radius">2dp</dimen>
+    <!-- Image -->
+    <dimen name="iv_item_promotion_width">130dp</dimen>
+    <!-- Name -->
+    <dimen name="tv_item_promotion_name_text_size">18sp</dimen>
+    <dimen name="tv_item_promotion_name_padding_start">8dp</dimen>
+    <dimen name="tv_item_promotion_name_padding_end">8dp</dimen>
+    <dimen name="tv_item_promotion_name_margin_bottom">4dp</dimen>
+    <integer name="tv_item_promotion_name_lines">1</integer>
+    <!-- Rating bar -->
+    <dimen name="rb_item_promotion_margin_start">8dp</dimen>
+    <integer name="rb_item_promotion_num_stars">5</integer>
+    <!-- Votes count -->
+    <dimen name="tv_item_promotion_votes_count_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_votes_count_margin_start">8dp</dimen>
+    <dimen name="tv_item_promotion_votes_count_margin_end">8dp</dimen>
+    <!-- Description -->
+    <dimen name="tv_item_promotion_description_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_description_margin_start">8dp</dimen>
+    <integer name="tv_item_promotion_description_lines">2</integer>
+    <!-- Stock and Price container -->
+    <dimen name="ll_item_promotion_stock_and_price_padding_start">8dp</dimen>
+    <dimen name="ll_item_promotion_stock_and_price_padding_end">8dp</dimen>
+    <dimen name="ll_item_promotion_stock_and_price_padding_top">4dp</dimen>
+    <dimen name="ll_item_promotion_stock_and_price_padding_bottom">4dp</dimen>
+    <!-- Stock -->
+    <dimen name="tv_item_promotion_stock_text_size">14sp</dimen>
+    <!-- Stock - Price separator -->
+    <dimen name="tv_item_promotion_separator">20sp</dimen>
+    <!-- Stock -->
+    <dimen name="tv_item_promotion_price_text_size">14sp</dimen>
+    <!-- Buttons container -->
+    <dimen name="ll_item_promotion_buttons_container_margin_top">4dp</dimen>
+    <dimen name="ll_item_promotion_buttons_container_margin_bottom">4dp</dimen>
+    <dimen name="ll_item_promotion_buttons_container_margin_end">4dp</dimen>
+    <!-- Like and Share buttons -->
+    <dimen name="iv_item_promotion_like_share_padding">2dp</dimen>
+    <!-- Like and Share buttons separator -->
+    <dimen name="iv_item_promotion_like_share_separator_height">8dp</dimen>
+    <!-- Type -->
+    <dimen name="tv_item_promotion_type_text_size">12sp</dimen>
+    <dimen name="tv_item_promotion_type_padding_start">8dp</dimen>
+    <dimen name="tv_item_promotion_type_padding_end">8dp</dimen>
+    <dimen name="tv_item_promotion_type_padding_top">4dp</dimen>
+    <dimen name="tv_item_promotion_type_padding_bottom">4dp</dimen>
+    <integer name="tv_item_promotion_type_lines">1</integer>
+
+
     <dimen name="abc_text_size_body_1_material">14sp</dimen>
     <dimen name="abc_text_size_body_2_material">14sp</dimen>
     <dimen name="abc_text_size_button_material">14sp</dimen>
