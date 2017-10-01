@@ -1,24 +1,25 @@
 package com.dvmatias.previaalpaso.activities;
 
-import android.app.Activity;
-import android.graphics.Typeface;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 
-import com.dvmatias.previaalpaso.custom.PreviaFragmentManager;
 import com.dvmatias.previaalpaso.R;
-import com.dvmatias.previaalpaso.custom.CustomTypefaceSpan;
+import com.dvmatias.previaalpaso.custom.PreviaFragmentManager;
 import com.dvmatias.previaalpaso.fragments.LoadingFragment;
 import com.dvmatias.previaalpaso.fragments.PromotionListFragment;
-import com.dvmatias.previaalpaso.fragments.SponsorsFragment;
 import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
 
@@ -29,37 +30,88 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("unused")
     private final static String TAG = MainActivity.class.getSimpleName();
     /**
-     *
-     */
-    public final Activity activitty = MainActivity.this;
-    /**
      * Previa custom fragment manager.
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
+    /**
+     * TODO: (desc)
+     */
+    @SuppressLint("StaticFieldLeak")
+    public static FrameLayout container;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // ActionBar
+        // ActionBar.
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
+        // Add margin to toolbar to avoid status bar overlap.
+        CollapsingToolbarLayout.LayoutParams toolbarParams = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
+        toolbarParams.setMargins(0,getStatusBarHeight(),0,0);
+        toolbar.setLayoutParams(toolbarParams);
+
+        // Select marquee to auto scroll.
+        findViewById(R.id.tv_app_bar_main_toolbar_marquee).setSelected(true);
+
+        // Floating button
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                // TODO Implement action.
+            }
+        });
+
+        // Collapsing Toolbar.
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitleEnabled(false);
+
+        container = findViewById(R.id.container_main);
+
         mPreviaFragmentManager = new PreviaFragmentManager(this);
         if (!FirebaseDatabaseHelper.isPromotionsAndProductsReady()) {
+            CoordinatorLayout.LayoutParams params =
+                    (CoordinatorLayout.LayoutParams) container.getLayoutParams();
+            params.setBehavior(null);
+            container.requestLayout();
             // Replace LoadingFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
                     LoadingFragment.getInstance(),
                     LoadingFragment.TAG);
         } else {
+            CoordinatorLayout.LayoutParams params =
+                    (CoordinatorLayout.LayoutParams) container.getLayoutParams();
+            params.setBehavior(new AppBarLayout.ScrollingViewBehavior());
+            container.requestLayout();
             // Replace PromotionListFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
                     PromotionListFragment.INSTANCE,
                     PromotionListFragment.TAG);
         }
+    }
+
+    /**
+     * Calculate the status bar height.
+     *
+     * @return [int] Status bar height.
+     */
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     @Override
@@ -81,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onLoadingCompleted() {
+            CoordinatorLayout.LayoutParams params =
+                    (CoordinatorLayout.LayoutParams) container.getLayoutParams();
+            params.setBehavior(new AppBarLayout.ScrollingViewBehavior());
+            container.requestLayout();
             // Replace PromotionListFragment.
             mPreviaFragmentManager.replace(R.id.container_main,
                     PromotionListFragment.INSTANCE,
@@ -136,15 +192,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Apply custom font to navigation drawer menu items.
-     */
-    private void applyFontToMenuItem(MenuItem menuItem) {
-        Typeface font = Typeface.createFromAsset(getAssets(), "roboto_regular.ttf");
-        SpannableString mNewTitle = new SpannableString(menuItem.getTitle());
-        mNewTitle.setSpan(new CustomTypefaceSpan("" , font), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        menuItem.setTitle(mNewTitle);
     }
 }

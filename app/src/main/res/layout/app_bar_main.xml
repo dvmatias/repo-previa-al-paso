@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorActivityBackground"
-    tools:context="com.dvmatias.previaalpaso.activities.MainActivity">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    app:layout_collapseMode="pin">
 
-    <android.support.design.widget.AppBarLayout
+    <ImageView
+        android:id="@+id/iv_app_bar_main_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppBarOverlay">
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_promotions_toolbar" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:id="@+id/container_main"
+    <TextView
+        android:id="@+id/tv_app_bar_main_toolbar_marquee"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</android.support.design.widget.CoordinatorLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackgroundMarquee"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/tv_app_bar_main_toolbar_marquee_padding"
+        android:singleLine="true"
+        android:text="@string/toolbar_marquee"
+        android:textColor="@color/colorTextMarquee"
+        android:textSize="@dimen/tv_app_bar_main_toolbar_marquee_text_size" />
+
+    <View
+        android:id="@+id/v_app_bar_main_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/v_app_bar_main_shadow_height"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_shadow_horizontal"
+        android:paddingEnd="@dimen/v_app_bar_main_shadow_padding_end"
+        android:paddingStart="@dimen/v_app_bar_main_shadow_padding_start" />
+</LinearLayout>

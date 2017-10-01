@@ -9,11 +9,7 @@
     <string name="title_activity_main">MainActivity</string>
 
     <!-- Main Activity -->
-    <string name="nav_item_promotions">Promociones</string>
-    <string name="nav_item_online_chat">Chat en línea</string>
-    <string name="nav_item_sponsors">Auspiciantes</string>
-    <string name="nav_item_location">Ubicación</string>
-    <string name="nav_button_login">Iniciar sesión / Registrarme</string>
+    <string name="toolbar_marquee">&#9733;   Encargá la promoción que te guste o armá tu propio combo   &#9733;   Encargalo por Whatsapp o por Facebook   &#9733;   Retiralo   &#9733;   ¡Disfrutá!</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -4,13 +4,16 @@
     <color name="colorPrimaryDark">#961824</color>
     <color name="colorPrimaryLight">#D26772</color>
     <color name="colorAccent">#FFFF00</color>
+    <color name="colorAccentPurple">#652C90</color>
+    <color name="colorAccentPurpleLight">#8f54bc</color>
 
-    <color name="colorPrimaryText">#FF000000</color>
+
+    <color name="colorPrimaryText">#151515</color>
     <color name="colorSecondaryText">#87000000</color>
     <color name="colorDisableHintText">#26000000</color>
     <color name="colorStockHighlight">#FF019701</color>
 
-    <color name="colorActivityBackground">#F5F5F5</color>
+    <color name="colorActivityBackground">#FAFAFA</color>
     <color name="colorNavigationMenuBackground">#232323</color>
     <color name="promotionTypeBackground">#FFFBB619</color>
 
@@ -18,6 +21,10 @@
     <color name="colorDialogMessage">#484848</color>
     <color name="colorDialogButtonNormal">#BE1E2D</color>
     <color name="colorDialogButtonPressed">#88BE1E2D</color>
+
+    <!--App Bar Main -->
+    <color name="colorTextMarquee">#FAD50000</color>
+    <color name="colorBackgroundMarquee">#1AD50000</color>
 
     <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>

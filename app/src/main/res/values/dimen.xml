@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- APP BAR MAIN -->
+    <!-- Marquee -->
+    <dimen name="tv_app_bar_main_toolbar_marquee_text_size">16sp</dimen>
+    <dimen name="tv_app_bar_main_toolbar_marquee_padding">10dp</dimen>
+    <!-- Shadow -->
+    <dimen name="v_app_bar_main_shadow_height">3dp</dimen>
+    <dimen name="v_app_bar_main_shadow_padding_start">1dp</dimen>
+    <dimen name="v_app_bar_main_shadow_padding_end">1dp</dimen>
+
     <!-- PROMOTION LIST ITEM -->
     <!-- Card view -->
     <dimen name="cv_item_promotion_margin_top">12dp</dimen>
-    <dimen name="cv_item_promotion_margin_start">12dp</dimen>
-    <dimen name="cv_item_promotion_margin_end">12dp</dimen>
+    <dimen name="cv_item_promotion_margin_start">0dp</dimen>
+    <dimen name="cv_item_promotion_margin_end">0dp</dimen>
     <dimen name="cv_item_promotion_elevation">2dp</dimen>
-    <dimen name="cv_item_promotion_corner_radius">2dp</dimen>
+    <dimen name="cv_item_promotion_corner_radius">0dp</dimen>
     <!-- Image -->
-    <dimen name="iv_item_promotion_width">130dp</dimen>
+    <dimen name="iv_item_promotion_size">100dp</dimen>
     <!-- Name -->
-    <dimen name="tv_item_promotion_name_text_size">18sp</dimen>
+    <dimen name="tv_item_promotion_name_text_size">20sp</dimen>
     <dimen name="tv_item_promotion_name_padding_start">8dp</dimen>
     <dimen name="tv_item_promotion_name_padding_end">8dp</dimen>
     <dimen name="tv_item_promotion_name_margin_bottom">4dp</dimen>
@@ -19,12 +28,13 @@
     <dimen name="rb_item_promotion_margin_start">8dp</dimen>
     <integer name="rb_item_promotion_num_stars">5</integer>
     <!-- Votes count -->
-    <dimen name="tv_item_promotion_votes_count_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_votes_count_text_size">16sp</dimen>
     <dimen name="tv_item_promotion_votes_count_margin_start">8dp</dimen>
     <dimen name="tv_item_promotion_votes_count_margin_end">8dp</dimen>
     <!-- Description -->
-    <dimen name="tv_item_promotion_description_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_description_text_size">16sp</dimen>
     <dimen name="tv_item_promotion_description_margin_start">8dp</dimen>
+    <dimen name="tv_item_promotion_description_margin_top">4dp</dimen>
     <integer name="tv_item_promotion_description_lines">2</integer>
     <!-- Stock and Price container -->
     <dimen name="ll_item_promotion_stock_and_price_padding_start">8dp</dimen>
@@ -32,11 +42,11 @@
     <dimen name="ll_item_promotion_stock_and_price_padding_top">4dp</dimen>
     <dimen name="ll_item_promotion_stock_and_price_padding_bottom">4dp</dimen>
     <!-- Stock -->
-    <dimen name="tv_item_promotion_stock_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_stock_text_size">18sp</dimen>
     <!-- Stock - Price separator -->
     <dimen name="tv_item_promotion_separator">20sp</dimen>
     <!-- Stock -->
-    <dimen name="tv_item_promotion_price_text_size">14sp</dimen>
+    <dimen name="tv_item_promotion_price_text_size">18sp</dimen>
     <!-- Buttons container -->
     <dimen name="ll_item_promotion_buttons_container_margin_top">4dp</dimen>
     <dimen name="ll_item_promotion_buttons_container_margin_bottom">4dp</dimen>

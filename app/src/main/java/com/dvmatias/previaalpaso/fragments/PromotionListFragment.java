@@ -38,10 +38,6 @@ public class PromotionListFragment extends Fragment {
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
     /**
-     * FAB.
-     */
-    private static FloatingActionButton fab;
-    /**
      * Recycler view.
      */
     private static RecyclerView rvPromotions;
@@ -71,17 +67,6 @@ public class PromotionListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_promotion_list, container, false);
 
-
-        // Floating button
-        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                // TODO: Implement action.
-            }
-        });
         rvPromotions = (RecyclerView) rootView.findViewById(R.id.rv_promotions);
 
         rvPromotions.setLayoutManager(
