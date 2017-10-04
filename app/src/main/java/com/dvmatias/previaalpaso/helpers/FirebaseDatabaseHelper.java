@@ -102,6 +102,10 @@ public class FirebaseDatabaseHelper {
      */
     private static final String KEY_URL_IMAGE = "url_img";
     /**
+     * Key name for the promotion -> url_thumbnail child.
+     */
+    private static final String KEY_URL_THUMBNAIL = "url_thumbnail";
+    /**
      * Key name for the product -> brand child.
      */
     private static final String KEY_BRAND = "brand";
@@ -357,6 +361,8 @@ public class FirebaseDatabaseHelper {
                                 .child(KEY_SPONSOR).getValue(Sponsor.class));
                         promotion.setType((String) dataSnapshot.child(KEY_TYPE).getValue());
                         promotion.setUrl_img((String) dataSnapshot.child(KEY_URL_IMAGE).getValue());
+                        promotion.setUrl_thumbnail(
+                                (String) dataSnapshot.child(KEY_URL_THUMBNAIL).getValue());
 
                         promotionsArray.add(promotion);
 
@@ -438,7 +444,8 @@ public class FirebaseDatabaseHelper {
                                 @Override
                                 public void run() {
                                     long timeOffset =
-                                            Calendar.getInstance().getTimeInMillis() - mTaskStartTime;
+                                            Calendar.getInstance()
+                                                    .getTimeInMillis() - mTaskStartTime;
                                     if (timeOffset < MIN_DOWNLOAD_TASK_DURATION) {
                                         try {
                                             Thread.sleep(MIN_DOWNLOAD_TASK_DURATION - timeOffset);

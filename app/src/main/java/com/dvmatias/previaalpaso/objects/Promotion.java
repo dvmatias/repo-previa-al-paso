@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Promotion {
     private String url_img;
+    private String url_thumbnail;
     private String name;
     private ArrayList<Long> products_id;
     private long price;
@@ -39,10 +40,11 @@ public class Promotion {
      * @param sponsor []
      * @param id []
      */
-    public Promotion(String url_img, String name, ArrayList<Long> products_id, long price,
-                     double rating, long votes_count, String description, String type,
+    public Promotion(String url_img, String url_thumbnail, String name, ArrayList<Long> products_id,
+                     long price, double rating, long votes_count, String description, String type,
                      Sponsor sponsor, long id) {
         this.url_img = url_img;
+        this.url_thumbnail = url_thumbnail;
         this.name = name;
         this.products_id = products_id;
         this.price = price;
@@ -60,6 +62,14 @@ public class Promotion {
 
     public void setUrl_img(String url_img) {
         this.url_img = url_img;
+    }
+
+    public String getUrl_thumbnail() {
+        return url_thumbnail;
+    }
+
+    public void setUrl_thumbnail(String url_thumbnail) {
+        this.url_thumbnail = url_thumbnail;
     }
 
     public String getName() {

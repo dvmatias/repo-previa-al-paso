@@ -1,31 +1,27 @@
 package com.dvmatias.previaalpaso.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
-import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.helpers.SharedPreferenceHelper;
 import com.dvmatias.previaalpaso.objects.Promotion;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -48,6 +44,10 @@ public class PromotionsAdapter extends
      * Context.
      */
     private Context mContext;
+    /**
+     * Time delay before load the image.
+     */
+    private static final int DELAY_LOAD_IMG_THUMBNAIL = 500;
 
     /**
      * Constructor. </br>
@@ -105,7 +105,8 @@ public class PromotionsAdapter extends
 
     @Override
     public void onBindViewHolder(PromotionsViewHolder holder, int position) {
-        // TODO set image.
+        downloadPromoImage(holder.ivItemPromotionImage,
+                mPromotionArrayList.get(position).getUrl_thumbnail());
 
         holder.tvItemPromotionName.setText(mPromotionArrayList.get(position).getName());
         holder.rbItemPromotion.setRating((float) mPromotionArrayList.get(position).getRating());
@@ -235,4 +236,22 @@ public class PromotionsAdapter extends
             // TODO: implement action.
         }
     };
+
+    private void downloadPromoImage(View v, String url) {
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisk(true)
+                .resetViewBeforeLoading(true)
+                .delayBeforeLoading(DELAY_LOAD_IMG_THUMBNAIL)
+                .showImageForEmptyUri(null)
+                .showImageOnFail(null)
+                .showImageOnLoading(null)
+                .build();
+
+        //initialize image view
+        ImageView imageView = (ImageView) v;
+
+        //download and display image from url
+        imageLoader.displayImage(url, imageView, options);
+    }
 }

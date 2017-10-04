@@ -22,6 +22,12 @@ import com.dvmatias.previaalpaso.fragments.LoadingFragment;
 import com.dvmatias.previaalpaso.fragments.PromotionListFragment;
 import com.dvmatias.previaalpaso.helpers.FirebaseDatabaseHelper;
 import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private static PreviaFragmentManager mPreviaFragmentManager;
     /**
-     * TODO: (desc)
+     * Fragments container.
      */
     @SuppressLint("StaticFieldLeak")
     public static FrameLayout container;
@@ -98,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                     PromotionListFragment.INSTANCE,
                     PromotionListFragment.TAG);
         }
+
+        // UIL setup.
+        setupUIL();
     }
 
     /**
@@ -192,5 +201,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Setup the UIL to be used in the app.
+     */
+    private void setupUIL() {
+        // TODO config properly.
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisk(false)
+                .cacheInMemory(false)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .displayer(new FadeInBitmapDisplayer(300)).build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .memoryCache(new WeakMemoryCache())
+                .discCacheSize(100 * 1024 * 1024).build();
+
+        ImageLoader.getInstance().init(config);
     }
 }
