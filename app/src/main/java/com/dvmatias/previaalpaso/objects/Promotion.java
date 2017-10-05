@@ -20,6 +20,7 @@ public class Promotion {
     private Sponsor sponsor;
     private long id;
     private boolean inStock;
+    private ArrayList<String> productsNames;
 
     /**
      * Empty constructor.
@@ -152,6 +153,14 @@ public class Promotion {
         this.inStock = inStock;
     }
 
+    public ArrayList<String> getProductsNames() {
+        return productsNames;
+    }
+
+    public void setProductsNames(ArrayList<String> productsNames) {
+        this.productsNames = productsNames;
+    }
+
     @Override
     public String toString() {
         return "Promotion{" +
@@ -165,6 +174,8 @@ public class Promotion {
                 ", type='" + type + '\'' +
                 ", sponsor=" + sponsor +
                 ", id=" + id +
+                ", stock=" + inStock +
+                ", productsNames={" + productsNames + "}" +
                 '}';
     }
 }

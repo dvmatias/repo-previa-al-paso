@@ -1,6 +1,7 @@
 package com.dvmatias.previaalpaso.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        new FirebaseDatabaseHelper(getApplicationContext());
 
         // ActionBar.
         Toolbar toolbar = findViewById(R.id.toolbar);

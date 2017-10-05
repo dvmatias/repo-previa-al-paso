@@ -1,11 +1,11 @@
 package com.dvmatias.previaalpaso.helpers;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.util.LongSparseArray;
 import android.util.Log;
-import android.util.SparseArray;
 
+import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.activities.MainActivity;
 import com.dvmatias.previaalpaso.interfaces.IDatabaseDownloadState;
 import com.dvmatias.previaalpaso.objects.Product;
@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,6 +36,10 @@ public class FirebaseDatabaseHelper {
      */
     @SuppressWarnings("unused")
     private final static String TAG = FirebaseDatabaseHelper.class.getSimpleName();
+    /**
+     * Context.
+     */
+    private static Context mContext;
     /**
      * Array of {@link Promotion} objects.
      */
@@ -126,6 +129,14 @@ public class FirebaseDatabaseHelper {
      */
     private static final String KEY_STOCK = "stock";
     /**
+     * Maximum product content to take ml unit.
+     */
+    private final static int MAX_ML_CONTENT = 999;
+    /**
+     * Maximum product content to take ml unit.
+     */
+    private final static double CONTENT_LITER_DIVIDER = 1000.0;
+    /**
      * Min time of download task duration for booth, products and promotions.
      */
     private final static long MIN_DOWNLOAD_TASK_DURATION = 2500;
@@ -148,7 +159,7 @@ public class FirebaseDatabaseHelper {
     /**
      * Message what value to indicate the handler that the products must be downloaded.
      */
-    private final static int MSG_WHAT_SET_STOCK = 762;
+    private final static int MSG_WHAT_SET_STOCK_AND_PRODUCTS = 762;
     /**
      * Message what value to indicate the handler that the download has been completed.
      */
@@ -185,7 +196,8 @@ public class FirebaseDatabaseHelper {
     /**
      * Constructor.
      */
-    public FirebaseDatabaseHelper() {
+    public FirebaseDatabaseHelper(Context context) {
+        mContext = context;
         if (mPromotionsArray == null || mPromotionsArray.size() == 0
                 || mProductsArray == null || mProductsArray.size() == 0) {
             mPromotionsArray = new ArrayList<>();
@@ -265,8 +277,9 @@ public class FirebaseDatabaseHelper {
                 case MSG_WHAT_DOWNLOAD_PRODUCTS:
                     downloadProducts();
                     break;
-                case MSG_WHAT_SET_STOCK:
+                case MSG_WHAT_SET_STOCK_AND_PRODUCTS:
                     setPromotionsStock();
+                    setPromotionsProductsNames();
                     break;
                 case MGS_WHAT_DOWNLOAD_COMPLETED:
                     mDatabaseReference.removeEventListener(mChildEventListener);
@@ -455,9 +468,10 @@ public class FirebaseDatabaseHelper {
                                     }
 
                                     if (isPromotionsAndProductsReady()) {
-                                        Message messageSetStock = new Message();
-                                        messageSetStock.what = MSG_WHAT_SET_STOCK;
-                                        DownloadHandler.sendMessage(messageSetStock);
+                                        Message messageSetStockAndProducts = new Message();
+                                        messageSetStockAndProducts.what =
+                                                MSG_WHAT_SET_STOCK_AND_PRODUCTS;
+                                        DownloadHandler.sendMessage(messageSetStockAndProducts);
                                     } else {
                                         Log.d(TAG, "*** C");
                                         Message msgDownloadFailed = new Message();
@@ -532,5 +546,39 @@ public class FirebaseDatabaseHelper {
         Message messageDownloadCompleted = new Message();
         messageDownloadCompleted.what = MGS_WHAT_DOWNLOAD_COMPLETED;
         DownloadHandler.sendMessage(messageDownloadCompleted);
+    }
+
+    /**
+     * Set the ArrayList<String> that contains all the products inside a promotion.
+     */
+    private static void setPromotionsProductsNames() {
+        for (Promotion promotion : mPromotionsArray) {
+            ArrayList<String> productsNames = new ArrayList<>();
+            ArrayList<Long> productsId = promotion.getProducts_id();
+
+            for (int cont=0; cont<productsId.size(); cont++) {
+                for (Product product : mProductsArray) {
+                    if (productsId.get(cont) == product.getId()) {
+                        productsNames.add(product.getName() + " "
+                                + getFormattedContent(product.getContentMl()));
+                    }
+                }
+            }
+            promotion.setProductsNames(productsNames);
+        }
+    }
+
+    /**
+     * Set the product content in ml to L if the content exceeds 1 liter.
+     * @param contentMl [long] content in ml of the product.
+     * @return [String] content formated to ml o L.
+     */
+    private static String getFormattedContent(long contentMl) {
+        if (contentMl < MAX_ML_CONTENT) {
+            return contentMl + mContext.getString(R.string.unit_milliliter);
+        } else {
+            return ((float)contentMl)/CONTENT_LITER_DIVIDER
+                    + mContext.getString(R.string.unit_liter);
+        }
     }
 }

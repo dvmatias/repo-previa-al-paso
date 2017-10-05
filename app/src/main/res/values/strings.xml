@@ -23,4 +23,14 @@
     <string name="votes_count_place_holder">%1$d Votos</string>
     <string name="stock">stock</string>
     <string name="stock_price_separator">&#160;&#160;·&#160;&#160;</string>
+
+    <!-- Promotions Adapter -->
+    <string name="promo_share_place_holder">Previa al Paso Maipú\n\n%1$s - $%2$s\n%3$s\nDescargate nuestra App! %4$s</string>
+    <string name="url_fanpage">https://www.facebook.com/previaalpasomaipu/</string>
+    <string name="key_promo_image">123</string>
+
+    <!-- Firebase Database Helper -->
+    <string name="unit_milliliter">ml</string>
+    <string name="unit_liter">L</string>
+    <string name="link_app">com.dvmatias.previaalpaso</string>
 </resources>

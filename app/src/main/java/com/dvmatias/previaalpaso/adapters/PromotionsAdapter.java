@@ -1,9 +1,12 @@
 package com.dvmatias.previaalpaso.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dvmatias.previaalpaso.R;
 import com.dvmatias.previaalpaso.helpers.SharedPreferenceHelper;
@@ -45,6 +47,10 @@ public class PromotionsAdapter extends
      */
     private Context mContext;
     /**
+     * Activity.
+     */
+    private Activity mActivity;
+    /**
      * Time delay before load the image.
      */
     private static final int DELAY_LOAD_IMG_THUMBNAIL = 500;
@@ -54,9 +60,11 @@ public class PromotionsAdapter extends
      *
      * @param promotionsArray [ArrayList<Promotion>] list of all promotions in DB.
      */
-    public PromotionsAdapter(ArrayList<Promotion> promotionsArray, Context context) {
+    public PromotionsAdapter(ArrayList<Promotion> promotionsArray, Context context
+            , Activity activity) {
         this.mPromotionArrayList = promotionsArray;
         this.mContext = context;
+        this.mActivity = activity;
     }
 
     /**
@@ -127,6 +135,7 @@ public class PromotionsAdapter extends
         holder.ivItemPromotionLike.setTag(mPromotionArrayList.get(position).getId());
         holder.ivItemPromotionLike.setOnClickListener(likeOnClickListener);
 
+        holder.ivItemPromotionShare.setTag(position);
         holder.ivItemPromotionShare.setOnClickListener(shareOnClickListener);
 
         setStockTextColor(holder.tvItemPromotionStock, mPromotionArrayList.get(position));
@@ -204,8 +213,28 @@ public class PromotionsAdapter extends
     private View.OnClickListener shareOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext, "Share clicked!", Toast.LENGTH_SHORT).show();
-            // TODO implemente action
+
+            Promotion promoToShare = mPromotionArrayList.get((int) view.getTag());
+
+            Log.d(TAG, "*** (int) view.getTag():" + (int) view.getTag());
+            SpannableStringBuilder sb = new SpannableStringBuilder();
+            ArrayList<String> productsNames = promoToShare.getProductsNames();
+            Log.d(TAG, "*** :" + productsNames.toString());
+            for (String productName : productsNames) {
+                sb.append(" *  ").append(productName).append("\n");
+            }
+
+            String shareText = mContext.getString(R.string.promo_share_place_holder,
+                    promoToShare.getName(),
+                    String.valueOf(promoToShare.getPrice()),
+                    sb.toString(),
+                    mContext.getString(R.string.link_app));
+
+            Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+            whatsappIntent.setType("text/plain");
+            whatsappIntent.setPackage("com.whatsapp");
+            whatsappIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            mActivity.startActivity(whatsappIntent);
         }
     };
 
@@ -248,10 +277,7 @@ public class PromotionsAdapter extends
                 .showImageOnLoading(null)
                 .build();
 
-        //initialize image view
-        ImageView imageView = (ImageView) v;
-
         //download and display image from url
-        imageLoader.displayImage(url, imageView, options);
+        imageLoader.displayImage(url, (ImageView) v, options);
     }
 }
