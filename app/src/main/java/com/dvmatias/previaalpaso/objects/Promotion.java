@@ -1,5 +1,8 @@
 package com.dvmatias.previaalpaso.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +10,7 @@ import java.util.ArrayList;
  * objects.
  */
 
-public class Promotion {
+public class Promotion implements Parcelable{
     private String url_img;
     private String url_thumbnail;
     private String name;
@@ -56,6 +59,18 @@ public class Promotion {
         this.sponsor = sponsor;
         this.id = id;
     }
+
+    public static final Creator<Promotion> CREATOR = new Creator<Promotion>() {
+        @Override
+        public Promotion createFromParcel(Parcel in) {
+            return new Promotion(in);
+        }
+
+        @Override
+        public Promotion[] newArray(int size) {
+            return new Promotion[size];
+        }
+    };
 
     public String getUrl_img() {
         return url_img;
@@ -165,17 +180,62 @@ public class Promotion {
     public String toString() {
         return "Promotion{" +
                 "url_img='" + url_img + '\'' +
+                ", url_thumbnail='" + url_thumbnail + '\'' +
                 ", name='" + name + '\'' +
-                ", products_id=" + products_id +
-                ", price=" + price +
-                ", rating=" + rating +
-                ", votes_count=" + votes_count +
+                ", products_id=" + products_id + '\'' +
+                ", price=" + price + '\'' +
+                ", rating=" + rating + '\'' +
+                ", votes_count=" + votes_count + '\'' +
                 ", description='" + description + '\'' +
                 ", type='" + type + '\'' +
-                ", sponsor=" + sponsor +
-                ", id=" + id +
-                ", stock=" + inStock +
+                ", sponsor=" + sponsor + '\'' +
+                ", id=" + id + '\'' +
+                ", stock=" + inStock + '\'' +
                 ", productsNames={" + productsNames + "}" +
                 '}';
     }
+
+    /*
+     * Parcelling object.
+     */
+    public Promotion(Parcel in) {
+        //retrieve
+        this.url_img = in.readString();
+        this.url_thumbnail = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.type = in.readString();
+        this.price = in.readLong();
+        this.votes_count = in.readLong();
+        this.id = in.readLong();
+        this.rating = in.readDouble();
+        this.products_id = in.readArrayList(null);
+        this.inStock = in.readByte() != 0;
+        this.productsNames = in.readArrayList(null);
+        // TODO: Sponsor not implemented.
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        //write
+        parcel.writeString(this.url_img);
+        parcel.writeString(this.url_thumbnail);
+        parcel.writeString(this.name);
+        parcel.writeString(this.description);
+        parcel.writeString(this.type);
+        parcel.writeLong(this.price);
+        parcel.writeLong(this.votes_count);
+        parcel.writeLong(this.id);
+        parcel.writeDouble(this.rating);
+        parcel.writeList(this.products_id);
+        parcel.writeByte((byte) (this.inStock ? 1 : 0));
+        parcel.writeList(this.productsNames);
+        // TODO: Sponsor not implemented.
+    }
+
 }

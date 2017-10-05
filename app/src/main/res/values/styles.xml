@@ -17,6 +17,7 @@
 
     <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorActivityBackground</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

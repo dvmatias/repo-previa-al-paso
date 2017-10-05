@@ -13,7 +13,7 @@
     <color name="colorDisableHintText">#26000000</color>
     <color name="colorStockHighlight">#FF019701</color>
 
-    <color name="colorActivityBackground">#FAFAFA</color>
+    <color name="colorActivityBackground">#E1E1E1</color>
     <color name="colorNavigationMenuBackground">#232323</color>
     <color name="promotionTypeBackground">#FFFBB619</color>
 

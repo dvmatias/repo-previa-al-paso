@@ -3,6 +3,7 @@ package com.dvmatias.previaalpaso.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.dvmatias.previaalpaso.R;
+import com.dvmatias.previaalpaso.activities.PromotionActivity;
 import com.dvmatias.previaalpaso.helpers.SharedPreferenceHelper;
 import com.dvmatias.previaalpaso.objects.Promotion;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -54,6 +56,10 @@ public class PromotionsAdapter extends
      * Time delay before load the image.
      */
     private static final int DELAY_LOAD_IMG_THUMBNAIL = 500;
+    /**
+     * Key. Extra name to send Promotion object to PromotionActivity.
+     */
+    private static final String KEY_EXTRA_PROMOTION = "promotion";
 
     /**
      * Constructor. </br>
@@ -261,8 +267,11 @@ public class PromotionsAdapter extends
     private View.OnClickListener cardViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "*** clicked item = " + view.getTag());
-            // TODO: implement action.
+            Intent intent = new Intent(mActivity, PromotionActivity.class);
+            Bundle extras = new Bundle();
+            extras.putParcelable(KEY_EXTRA_PROMOTION, mPromotionArrayList.get((int) view.getTag()));
+            intent.putExtras(extras);
+            mActivity.startActivity(intent);
         }
     };
 

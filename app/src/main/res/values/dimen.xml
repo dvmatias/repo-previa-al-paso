@@ -12,10 +12,10 @@
     <!-- PROMOTION LIST ITEM -->
     <!-- Card view -->
     <dimen name="cv_item_promotion_margin_top">12dp</dimen>
-    <dimen name="cv_item_promotion_margin_start">8dp</dimen>
-    <dimen name="cv_item_promotion_margin_end">8dp</dimen>
-    <dimen name="cv_item_promotion_elevation">2dp</dimen>
-    <dimen name="cv_item_promotion_corner_radius">2dp</dimen>
+    <dimen name="cv_item_promotion_margin_start">0dp</dimen>
+    <dimen name="cv_item_promotion_margin_end">0dp</dimen>
+    <dimen name="cv_item_promotion_elevation">1dp</dimen>
+    <dimen name="cv_item_promotion_corner_radius">1dp</dimen>
     <!-- Image -->
     <dimen name="iv_item_promotion_size">100dp</dimen>
     <!-- Name -->
