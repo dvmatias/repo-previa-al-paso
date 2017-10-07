@@ -6,8 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor">@color/colorTransparent</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar" >
@@ -26,4 +24,8 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MyProgressStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">#FAe1e1e1</item>
+    </style>
 </resources>

@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar" >
@@ -21,6 +20,12 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="PromotionActivity" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorActivityBackground</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -29,4 +34,6 @@
         <item name="colorControlNormal">@color/colorAccentPurpleLight</item>
         <item name="colorControlActivated">@color/colorAccentPurpleLight</item>
     </style>
+
+
 </resources>

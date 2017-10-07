@@ -73,7 +73,6 @@ public class LoadingFragment extends Fragment {
      * Create a new instance for {@link LoadingFragment}
      */
     private static LoadingFragment newInstance() {
-        Log.d(TAG, "*** UNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         return new LoadingFragment();
     }
 
@@ -133,7 +132,6 @@ public class LoadingFragment extends Fragment {
      */
     public void startLoadingAnimation() {
         tvRetry.setVisibility(View.GONE);
-        Log.d(TAG, "*** startLoadingAnimation()");
         mLoadingIndicator.clearAnimation();
         mLoadingView.setVisibility(View.VISIBLE);
 

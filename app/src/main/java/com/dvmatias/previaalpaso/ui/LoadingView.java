@@ -57,7 +57,6 @@ public class LoadingView extends FrameLayout {
      * Init views.
      */
     private void initView(final Context context) {
-        Log.d(TAG, "*** initView() UNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         loadingIndicator.setClickable(false);
         loadingIndicator.setSize(FloatingActionButton.SIZE_NORMAL);
     }

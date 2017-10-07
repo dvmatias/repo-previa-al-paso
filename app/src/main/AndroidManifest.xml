@@ -37,7 +37,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.PromotionActivity"
-            android:theme="@style/MainTheme"
+            android:theme="@style/PromotionActivity"
             android:screenOrientation="portrait">
 
         </activity>
