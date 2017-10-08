@@ -11,7 +11,8 @@
     <color name="colorPrimaryText">#151515</color>
     <color name="colorSecondaryText">#87000000</color>
     <color name="colorDisableHintText">#26000000</color>
-    <color name="colorStockHighlight">#FF019701</color>
+    <color name="colorStockTrue">#FF019701</color>
+    <color name="colorStockFalse">#FFd60909</color>
 
     <color name="colorActivityBackground">#E1E1E1</color>
     <color name="colorNavigationMenuBackground">#232323</color>
@@ -29,5 +30,4 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorRed">#FFFF0000</color>
 </resources>

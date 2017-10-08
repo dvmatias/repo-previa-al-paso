@@ -63,6 +63,19 @@
     <dimen name="tv_item_promotion_type_padding_bottom">4dp</dimen>
     <integer name="tv_item_promotion_type_lines">1</integer>
 
+    <!-- PROMOTION ACTIVITY -->
+    <dimen name="nested_scroll_padding_top">12dp</dimen>
+    <dimen name="ll_info_padding">12dp</dimen>
+    <!-- Name -->
+    <dimen name="tv_promotion_name_text_size">24sp</dimen>
+    <integer name="tv_promotion_name_lines">2</integer>
+    <!-- Price -->
+    <dimen name="tv_promotion_price_margin_start">8dp</dimen>
+    <dimen name="tv_promotion_price_text_size">24sp</dimen>
+    <!-- Type -->
+    <dimen name="tv_promotion_type_text_size">14sp</dimen>
+    <integer name="tv_promotion_type_lines">1</integer>
+
 
     <dimen name="abc_text_size_body_1_material">14sp</dimen>
     <dimen name="abc_text_size_body_2_material">14sp</dimen>

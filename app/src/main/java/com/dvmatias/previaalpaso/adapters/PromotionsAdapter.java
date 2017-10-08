@@ -156,10 +156,10 @@ public class PromotionsAdapter extends
     private void setStockTextColor(View v, Promotion promotion) {
         if (promotion.isInStock()) {
             ((TextView) v).setTextColor(
-                    ContextCompat.getColor(mContext, R.color.colorStockHighlight));
+                    ContextCompat.getColor(mContext, R.color.colorStockTrue));
         } else {
             ((TextView) v).setTextColor(
-                    ContextCompat.getColor(mContext, R.color.colorSecondaryText));
+                    ContextCompat.getColor(mContext, R.color.colorStockFalse));
         }
 
     }

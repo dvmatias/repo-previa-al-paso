@@ -20,7 +20,7 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="PromotionActivity" parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="PromotionTheme" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/colorActivityBackground</item>
         <item name="android:windowTranslucentStatus">true</item>
@@ -35,5 +35,13 @@
         <item name="colorControlActivated">@color/colorAccentPurpleLight</item>
     </style>
 
+    <style name="RatingBarPromotion" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
 
+    <style name="RatingBarPromotion1" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/promotionTypeBackground</item>
+        <item name="colorControlActivated">@color/promotionTypeBackground</item>
+    </style>
 </resources>
